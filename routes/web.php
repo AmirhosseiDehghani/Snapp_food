@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminCategoryRestaurant;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,23 +15,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/','home');
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
+Route::get('homeRedirect',HomeController::class)->name('homeRedirect');
 
 Route::middleware('auth')->group(function (){
+
+
     // Admin
     Route::middleware('auth')->name('Admin.')->prefix('/Admin')->group(function()
     {
         Route::get('/home',[App\Http\Controllers\Admin\AdminController::class, 'index'])->name('home');
 
+        Route::resource('CategoryOfRestaurant',AdminCategoryRestaurant::class);
+        
         // Route::resource('CategoryOfFood',AdminCategoryFood::class);
-
-        // Route::resource('CategoryOfRestaurant',AdminCategoryRestaurant::class);
 
         
     });

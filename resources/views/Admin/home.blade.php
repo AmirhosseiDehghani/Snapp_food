@@ -4,7 +4,7 @@
     
 
 
-
+<p>it is home </p>
 
 
 @endsection
