@@ -5,7 +5,7 @@
 <div class="row ">
     <div class="col">
         <div class="">
-            <form action="{{route('Admin.CategoryOfFood.store')}}" method="POST">
+            <form action="{{route('Admin.CategoryOfRestaurant.store')}}" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col mb-3">
@@ -97,7 +97,7 @@
                         <td>
                             <div>
                                 {{-- //TODO: make infomaitoin for category show --}}
-                                <form action="{{routeCategoryOfFood}}" method="">
+                                <form action="#" method="">
                                     @csrf
                                    
                                     <input  name="id" type="hidden" value="{{$Category->id}}">

@@ -61,12 +61,12 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#" class="nav-link px-0 align-middle">
+                        <a href="{{route('Admin.Discount.index')}}" class="nav-link px-0 align-middle">
                             <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Discount</span></a>
                     </li>
                     
                     <li>
-                        <a href="#" class="nav-link px-0 align-middle">
+                        <a href="" class="nav-link px-0 align-middle">
                             <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Request for delete Comment</span> </a>
                     </li>
                     <li>

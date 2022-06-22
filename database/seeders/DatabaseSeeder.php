@@ -16,17 +16,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            RoleSeeder::class,
-            CategorySeeder::class,
-            
-        ]);
         DB::table('users')->insert([
             'name'=>'admin',
             'role'=>0,
             'email'=>'admin@admin.com',
             'password'=>Hash::make(123)
         ]);
+        
+        $this->call([
+            RoleSeeder::class,
+            CategorySeeder::class,
+            DiscountsSeeder::class,
+            
+        ]);
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

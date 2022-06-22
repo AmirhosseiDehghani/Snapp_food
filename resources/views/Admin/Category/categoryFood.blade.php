@@ -5,7 +5,7 @@
 <div class="row ">
     <div class="col">
         <div class="">
-            <form action="{{route('Admin.CategoryOfRestaurant.store')}}" method="POST">
+            <form action="{{route('Admin.CategoryOfFood.store')}}" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col mb-3">
