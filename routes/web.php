@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function (){
 
     });
     //Seller
-    Route::name('Restaurant.')->prefix('Restaurant')->group(function()
+    Route::name('Seller.')->prefix('Restaurant')->group(function()
     {
         Route::get('/home',[]);
 

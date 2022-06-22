@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name'=>'admin',
-            'role'=>0,
+            'role'=>Role::ADMIN,
             'email'=>'admin@admin.com',
             'password'=>Hash::make(123)
         ]);
