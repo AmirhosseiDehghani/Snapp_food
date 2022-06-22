@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminCategoryFood;
 use App\Http\Controllers\Admin\AdminCategoryRestaurant;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -29,14 +30,13 @@ Route::middleware('auth')->group(function (){
     {
         Route::get('/home',[App\Http\Controllers\Admin\AdminController::class, 'index'])->name('home');
 
-        Route::resource('CategoryOfRestaurant',AdminCategoryRestaurant::class);
+        Route::resource('CategoryOfRestaurant',AdminCategoryRestaurant::class)->except(['edit','create']);
         
-        // Route::resource('CategoryOfFood',AdminCategoryFood::class);
+        Route::resource('CategoryOfFood',AdminCategoryFood::class)->only(['index','show','store']);
 
-        
     });
     //Seller
-    Route::name('Restaurant.')->prefix('Restaurant.')->group(function()
+    Route::name('Restaurant.')->prefix('Restaurant')->group(function()
     {
         Route::get('/home',[]);
 

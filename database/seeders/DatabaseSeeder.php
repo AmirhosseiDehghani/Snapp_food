@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleSeeder::class,
+            CategorySeeder::class,
             
         ]);
         DB::table('users')->insert([
