@@ -40,12 +40,12 @@ Route::middleware('auth')->group(function (){
 
     });
     //Seller
-    Route::middleware('isSeller')->name('Seller.')->prefix('User')->group(function()
+    Route::middleware('auth')->name('Seller.')->prefix('User')->group(function()
     {
-        // Route::get('/home',[SellerSiteController::class,'home'])->name('home');
-        // Route::get('/profile',[SellerSiteController::class,'profile'])->name('profile');
+        Route::get('/home',[SellerSiteController::class,'home'])->name('home');
+        Route::get('/profile',[SellerSiteController::class,'profile'])->name('profile');
 
-        // Route::resource('/Restaurant',RestaurantController::class);
+        Route::resource('/Restaurant',SellerSiteController::class);
 
     });
     
