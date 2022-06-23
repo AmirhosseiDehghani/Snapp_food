@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\AdminCategoryFood;
 use App\Http\Controllers\Admin\AdminCategoryRestaurant;
 use App\Http\Controllers\Admin\AdminDiscount;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\Seller\SellerSiteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,7 +29,7 @@ Route::middleware('auth')->group(function (){
 
 
     // Admin
-    Route::middleware('auth')->name('Admin.')->prefix('/Admin')->group(function()
+    Route::middleware('isAdmin')->name('Admin.')->prefix('/Admin')->group(function()
     {
         Route::get('/home',[App\Http\Controllers\Admin\AdminController::class, 'index'])->name('home');
 
@@ -38,9 +40,12 @@ Route::middleware('auth')->group(function (){
 
     });
     //Seller
-    Route::name('Seller.')->prefix('Restaurant')->group(function()
+    Route::middleware('isSeller')->name('Seller.')->prefix('User')->group(function()
     {
-        Route::get('/home',[]);
+        // Route::get('/home',[SellerSiteController::class,'home'])->name('home');
+        // Route::get('/profile',[SellerSiteController::class,'profile'])->name('profile');
+
+        // Route::resource('/Restaurant',RestaurantController::class);
 
     });
     
