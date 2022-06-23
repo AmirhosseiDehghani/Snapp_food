@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function (){
 
     });
     //Seller
-    Route::middleware('auth')->name('Seller.')->prefix('User')->group(function()
+    Route::middleware('isSeller')->name('Seller.')->prefix('Seller')->group(function()
     {
         Route::get('/home',[SellerSiteController::class,'home'])->name('home');
         Route::get('/profile',[SellerSiteController::class,'profile'])->name('profile');
