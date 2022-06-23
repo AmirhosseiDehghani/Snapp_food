@@ -42,30 +42,33 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link align-middle px-0">
+                        <a href="{{route('Seller.home')}}" class="nav-link align-middle px-0">
                             <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{route('Seller.profile')}}" class="nav-link align-middle px-0">
+                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Profile</span>
+                        </a>
+                    </li>
                     <li>
-                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                            <i class="bi bi-tags-fill"></i> <span class="ms-1 d-none d-sm-inline">Category</span> </a>
+                        <a href="{{route('Seller.home')}}" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                            <i class="bi bi-tags-fill"></i> <span class="ms-1 d-none d-sm-inline">Restaurant</span> </a>
                         <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                             <li class="w-100">
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Food</span>  </a>
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Add</span>  </a>
                             </li>
                             <li>
-                                <a href="{{route('Admin.CategoryOfRestaurant.index')}}" class="nav-link px-0"> <span class="d-none d-sm-inline">Restaurant</span>  </a>
+                                <a href="{{route('Seller.Restaurant.index')}}" class="nav-link px-0"> <span class="d-none d-sm-inline">My Restaurant</span>  </a>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="{{route('Admin.Discount.index')}}" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Discount</span></a>
-                    </li>
+                    
+                   
                     
                     <li>
                         <a href="" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Request for delete Comment</span> </a>
+                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Sales Report</span> </a>
                     </li>
                     <li>
                         <a href="#" class="nav-link px-0 align-middle">
