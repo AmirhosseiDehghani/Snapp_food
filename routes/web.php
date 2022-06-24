@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminDiscount;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\Seller\SellerSiteController;
+use App\Http\Controllers\Seller\SellerUpdateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,10 +44,13 @@ Route::middleware('auth')->group(function (){
     Route::middleware('isSeller')->name('Seller.')->prefix('Seller')->group(function()
     {
         Route::get('/home',[SellerSiteController::class,'home'])->name('home');
+
         Route::get('/profile',[SellerSiteController::class,'profile'])->name('profile');
-
+        // Route::get('/profile/{}/e',[SellerSiteController::class,'profile'])->name('profile');
+        Route::put('/profile',SellerUpdateController::class)->name('profile.update');
+        
         Route::resource('/Restaurant',SellerSiteController::class);
-
+        
     });
     
 
