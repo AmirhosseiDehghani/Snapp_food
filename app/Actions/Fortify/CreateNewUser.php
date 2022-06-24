@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\Seller;
 use App\Models\User;
 use App\Rules\IranPhoneNumberRule;
 use Illuminate\Support\Facades\Hash;
@@ -35,7 +36,7 @@ class CreateNewUser implements CreatesNewUsers
 
         ])->validate();
 
-        return User::create([
+        return Seller::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'phone' => $input['phone'],
