@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Scopes\WhereSeller;
+use App\Scopes\WhereSellerScopes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -38,7 +37,7 @@ class Seller extends User
 
     protected static function booted()
     {
-        static::addGlobalScope(new WhereSeller);
+        static::addGlobalScope(new WhereSellerScopes);
     }
     
 }
