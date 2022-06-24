@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->enum('type',['food','restaurant']);
+            $table->unsignedBigInteger('categoriesable_id');
+            $table->string('categoriesable_type');
             $table->timestamps();
         });
     }

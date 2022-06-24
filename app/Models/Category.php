@@ -15,6 +15,14 @@ class Category extends Model
         'description',
         'type',
     ];
+    //------------- Relationship---------------//
+     /**
+     * Get the parent imageable model (user or post).
+     */
+    public function categoriesable()
+    {
+        return $this->morphTo();
+    }
 
 
 }

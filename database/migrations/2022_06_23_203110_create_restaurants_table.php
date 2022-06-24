@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use App\Models\Restaurant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,7 +19,7 @@ return new class extends Migration
         Schema::create('restaurants', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('category');
+            $table->foreignIdFor(Category::class)->nullable()->constrained();
             $table->string('phone');
             $table->string('address');
             $table->string('account');
