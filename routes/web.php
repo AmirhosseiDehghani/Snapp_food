@@ -34,8 +34,8 @@ Route::middleware('auth')->group(function (){
     {
         Route::get('/home',[App\Http\Controllers\Admin\AdminController::class, 'index'])->name('home');
 
-        Route::resource('CategoryOfRestaurant',AdminCategoryRestaurant::class)->except(['edit','create']);
-        Route::resource('CategoryOfFood',AdminCategoryFood::class)->only(['index','show','store']);
+        Route::resource('Category/Restaurant',AdminCategoryRestaurant::class)->except(['edit','create']);
+        Route::resource('Category/Food',AdminCategoryFood::class)->only(['index','show','store']);
 
         Route::resource('/Discount',AdminDiscount::class)->except(['edit','create']);
 
@@ -49,7 +49,7 @@ Route::middleware('auth')->group(function (){
         // Route::get('/profile/{}/e',[SellerSiteController::class,'profile'])->name('profile');
         Route::put('/profile',SellerUpdateController::class)->name('profile.update');
         
-        Route::resource('/Restaurant',SellerSiteController::class);
+        Route::resource('/Restaurant',RestaurantController::class);
         
     });
     

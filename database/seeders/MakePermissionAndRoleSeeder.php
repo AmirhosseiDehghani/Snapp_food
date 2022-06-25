@@ -18,8 +18,9 @@ class MakePermissionAndRoleSeeder extends Seeder
      */
     public function run()
     {
-        
-        //اگه خواستیش  باید در 
+        //اگه خواستیش
+        //admin
+        // تغیر بدی باید در 
         //auth service provider
         // تغیر بدی
         // $roleAdmin = Role::create(['name' => 'Super Admin']);
@@ -33,6 +34,7 @@ class MakePermissionAndRoleSeeder extends Seeder
 
         $AllPermissions=[
             'add restaurant',
+            'edits restaurant',
             'delete restaurant',
             'see restaurant',
 
@@ -72,7 +74,7 @@ class MakePermissionAndRoleSeeder extends Seeder
         ];
 
         foreach($AllPermissions as $permission){
-            $permission = Permission::create(['name' => $permission]);
+            Permission::create(['name' => $permission]);
         }
        
         

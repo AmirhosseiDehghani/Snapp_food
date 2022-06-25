@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Scopes\WhereSellerScopes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
-
+use Spatie\Permission\Models\Role;
 
 class Seller extends User
 {
@@ -15,7 +15,7 @@ class Seller extends User
      * @var array
      */
     protected $attributes = [
-        'role' => Role::SELLER,
+        // 'role' => $this->assignRole('Seller') ,
     ];
     protected $table='users';
 

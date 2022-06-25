@@ -25,5 +25,15 @@ class Category extends Model
         return $this->morphedByMany(Restaurant::class, 'taggable');
     }
 
+    //------------- Scope---------------//
+    public function scopeWhereRestaurant($query)
+    {
+        $query->where('type','restaurant');
+    }
+    public function scopeWhereFood($query)
+    {
+        $query->where('type','food');
+    }
+
 
 }

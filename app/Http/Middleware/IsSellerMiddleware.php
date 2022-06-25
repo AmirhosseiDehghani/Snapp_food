@@ -19,5 +19,7 @@ class IsSellerMiddleware
     {
         if(auth()->user()->role==Role::SELLER or auth()->user()->role==Role::ADMIN )
         return $next($request);
+        
+        abort(403,'you do not allow');
     }
 }

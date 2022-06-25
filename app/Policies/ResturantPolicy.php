@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Resturant;
+use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ResturantPolicy
+class RestaurantPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,30 @@ class ResturantPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->can('see restaurant');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Resturant  $resturant
+     * @param  \App\Models\Restaurant  $restaurant
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Resturant $resturant)
+    public function view(User $user, Restaurant $restaurant)
     {
-        //
+        // if($user->hasRole('Admin')){
+        //     return true;
+        // }
+        if(! $user->can('see restaurant')){
+            return false;
+        }
+        // $UserOfRestaurants= $user->restaurants;
+        // foreach($UserOfRestaurants as $UserOfRestaurant){
+        // if($UserOfRestaurant->id==$restaurant->id){
+        //     return true;
+        // }
+        return false;
     }
 
     /**
@@ -41,54 +52,89 @@ class ResturantPolicy
      */
     public function create(User $user)
     {
-        //
+        
+      return  $user->can('add restaurant');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Resturant  $resturant
+     * @param  \App\Models\Restaurant  $restaurant
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Resturant $resturant)
+    public function update(User $user, Restaurant $restaurant)
     {
-        //
+        if($user->hasRole('Admin')){
+            return true;
+        }
+        if(! $user->can('add restaurant')){
+            return false;
+        }
+        
+       $UserOfRestaurants= $user->restaurants;
+
+       foreach($UserOfRestaurants as $UserOfRestaurant)
+       {
+            if($UserOfRestaurant->id==$restaurant->id){
+                return true;
+            }
+       }
+        return false;
+       
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Resturant  $resturant
+     * @param  \App\Models\Restaurant  $restaurant
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Resturant $resturant)
+    public function delete(User $user, Restaurant $restaurant)
     {
-        //
+        if($user->hasRole('Admin')){
+            return true;
+        }
+        if(! $user->can('delete restaurant')){
+            return false;
+        }
+        
+       $UserOfRestaurants= $user->restaurants;
+
+       foreach($UserOfRestaurants as $UserOfRestaurant)
+        { 
+            if($UserOfRestaurant->id==$restaurant->id){
+                return true;
+            }
+        }
+        return false;
     }
+    
+    
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Resturant  $resturant
+     * @param  \App\Models\Restaurant  $restaurant
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Resturant $resturant)
+    public function restore(User $user, Restaurant $restaurant)
     {
-        //
+        return $user->hasRole('Admin');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Resturant  $resturant
+     * @param  \App\Models\Restaurant  $restaurant
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Resturant $resturant)
+    public function forceDelete(User $user, Restaurant $restaurant)
     {
-        //
+       return $user->hasRole('Admin');
     }
 }
+

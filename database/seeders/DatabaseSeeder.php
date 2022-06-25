@@ -21,31 +21,30 @@ class DatabaseSeeder extends Seeder
     {
         (new MakePermissionAndRoleSeeder)->run();
 
-        DB::table('users')->insert([
-            'name'=>'admin',
-            'role'=>Role::query()->where('name','Admin')->get()->first()->id,
-            'email'=>'admin@admin.com',
-            'password'=>Hash::make(123)
-        ]);
+        // DB::table('users')->insert([
+        //     'name'=>'admin',
+        //     'role'=>Role::query()->where('name','Admin')->get()->first()->id,
+        //     'email'=>'admin@admin.com',
+        //     'password'=>Hash::make(123)
+        // ]);
         
-        // $admin=User::query()->insert([
-        //         'name'=>'admin',
-        //         // 'role'=>Role::ADMIN,
-        //         'email'=>'admin@admin.com',
-        //         'password'=>Hash::make(123)
-        //     ]);
-        // // $admin->assignRole('Admin');
-        // $user = User::first();
-        // $user->assignRole('Admin');
+        $admin=User::query()->create([
+                'name'=>'admin',
+                'email'=>'admin@adminss.com',
+                'password'=>Hash::make(123)
+            ]);
+        // $admin->assignRole('Admin');
+        $admin->assignRole('Admin');
+        
         
 
         $this->call([
             
             // MakePermissionAndRoleSeeder::class,
-            CategorySeeder::class,
-            DiscountsSeeder::class,
-            // SellerSeeder::class,
-            RestaurantSeeder::class,
+            // CategorySeeder::class,
+            // DiscountsSeeder::class,
+            SellerSeeder::class,
+            // RestaurantSeeder::class,
             
         ]);
 

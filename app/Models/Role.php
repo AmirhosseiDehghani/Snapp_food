@@ -10,7 +10,7 @@ class Role extends SpatieRole
 {
     use HasFactory;
 
-    const ADMIN=0;
-    const SELLER=1;
-    const BUYER=2;
+    const ADMIN=1;
+    const SELLER=2;
+    const BUYER=3;
 }

@@ -19,7 +19,7 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name'=>$this->faker->word(),
+            'name'=>'Category'.$this->faker->word(),
             'description'=>$this->faker->word(),
             'type'=>Arr::random(['food','restaurant']),
         ];

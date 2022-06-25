@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Restaurant extends Model
 {
     use HasFactory;
-
+    
     protected $fillable=
     [
         'name',
@@ -32,6 +32,11 @@ class Restaurant extends Model
     {
         return $this->belongsTo(Seller::class,'user_id','id');
     }
+    public function users()
+    {
+        return $this->morphToMany(User::class, 'userable');
+    }
+
     
 
     
