@@ -2,11 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role;
+
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,15 +19,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        (new MakePermissionAndRoleSeeder)->run();
+
         DB::table('users')->insert([
             'name'=>'admin',
-            'role'=>Role::ADMIN,
+            'role'=>Role::query()->where('name','Admin')->get()->first()->id,
             'email'=>'admin@admin.com',
             'password'=>Hash::make(123)
         ]);
         
+        // $admin=User::query()->insert([
+        //         'name'=>'admin',
+        //         // 'role'=>Role::ADMIN,
+        //         'email'=>'admin@admin.com',
+        //         'password'=>Hash::make(123)
+        //     ]);
+        // // $admin->assignRole('Admin');
+        // $user = User::first();
+        // $user->assignRole('Admin');
+        
+
         $this->call([
-            RoleSeeder::class,
+            
+            // MakePermissionAndRoleSeeder::class,
             CategorySeeder::class,
             DiscountsSeeder::class,
             // SellerSeeder::class,
