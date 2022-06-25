@@ -17,11 +17,12 @@ class CategoryFactory extends Factory
      * @return array<string, mixed>
      */
     public function definition()
-    {
+    {   
+        $a=Arr::random(['food','restaurant']);
         return [
-            'name'=>'Category'.$this->faker->word(),
+            'name'=>"Category $a ".$this->faker->word(),
             'description'=>$this->faker->word(),
-            'type'=>Arr::random(['food','restaurant']),
+            'type'=>$a,
         ];
     }
 }

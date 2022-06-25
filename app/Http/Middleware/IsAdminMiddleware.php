@@ -18,7 +18,7 @@ class IsAdminMiddleware
     public function handle(Request $request, Closure $next)
     {
 
-        if(!auth()->user()->role==Role::ADMIN){
+        if(!auth()->user()->HasRole("Admin")){
 
             // $request->r
             abort('401',' you are not allow ');

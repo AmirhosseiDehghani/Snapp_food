@@ -17,7 +17,7 @@ class IsSellerMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->role==Role::SELLER or auth()->user()->role==Role::ADMIN )
+        if(auth()->user()->hasRole('Seller') )
         return $next($request);
         
         abort(403,'you do not allow');

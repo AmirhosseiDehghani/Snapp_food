@@ -33,6 +33,10 @@ class MakePermissionAndRoleSeeder extends Seeder
         // ];
 
         $AllPermissions=[
+
+            'admin dashboard',
+            'seller dashboard',
+
             'add restaurant',
             'edits restaurant',
             'delete restaurant',
@@ -49,6 +53,8 @@ class MakePermissionAndRoleSeeder extends Seeder
         ];
 
         $SellerPermissions=[
+            'seller dashboard',
+
             'add restaurant',
             'delete restaurant',
             'see restaurant',
@@ -61,6 +67,7 @@ class MakePermissionAndRoleSeeder extends Seeder
 
             'request for delete comment' 
         ];
+
         $BuyerPermissions=[
 
             'see food',
