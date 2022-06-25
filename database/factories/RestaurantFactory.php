@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Seller;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +23,7 @@ class RestaurantFactory extends Factory
             'phone'=>$this->faker->phoneNumber(),
             'address'=>$this->faker->address(),
             'account'=>$this->faker->randomNumber(6),
-            
+            'user_id'=>Seller::factory(),
         ];
     }
 }

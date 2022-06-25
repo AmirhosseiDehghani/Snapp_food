@@ -24,15 +24,15 @@ class Restaurant extends Model
     ];
 
     //---------------- Relationship-------------------//
-    public function category()
+    public function categories()
     {
-        return $this->morphOne(Category::class, 'categoriesable');
+        return $this->morphToMany(Category::class, 'categorizable');
     }
-
     public function seller()
     {
         return $this->belongsTo(Seller::class,'user_id','id');
     }
+    
 
     
 

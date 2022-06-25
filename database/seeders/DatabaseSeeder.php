@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             CategorySeeder::class,
             DiscountsSeeder::class,
+            // SellerSeeder::class,
+            RestaurantSeeder::class,
             
         ]);
 
@@ -37,5 +39,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+       
     }
 }

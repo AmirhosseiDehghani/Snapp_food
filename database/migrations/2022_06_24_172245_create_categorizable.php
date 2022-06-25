@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('discounts', function (Blueprint $table) {
+        Schema::create('categorizables', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->enum('type',['percent','price']);
-            $table->integer('discount');
+            $table->unsignedBigInteger('category_id');
+            $table->morphs('categorizable');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('discounts');
+        Schema::dropIfExists('categorizables');
     }
 };

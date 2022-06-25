@@ -17,11 +17,12 @@ class Category extends Model
     ];
     //------------- Relationship---------------//
      /**
-     * Get the parent imageable model (user or post).
+     * Get all of Category tags for the post.
      */
-    public function categoriesable()
+   
+    public function restaurants()
     {
-        return $this->morphTo();
+        return $this->morphedByMany(Restaurant::class, 'taggable');
     }
 
 
