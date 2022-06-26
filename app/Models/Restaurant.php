@@ -36,7 +36,11 @@ class Restaurant extends Model
     {
         return $this->morphToMany(User::class, 'userable');
     }
-
+    public function date()
+    {
+        return $this->hasOne(Date::class);
+    }
+    
     
 
     

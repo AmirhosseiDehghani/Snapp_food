@@ -152,11 +152,6 @@
                         </div>
                     </div>
 
-
-
-
-
-
                         
                     @php $count++; @endphp
                     

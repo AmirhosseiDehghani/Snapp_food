@@ -33,8 +33,17 @@ class RestaurantController extends Controller
     {
         // dd(User::find(auth()->id())->hasRole('Seller'));
         User::find(auth()->id())->hasRole('Seller');
+        $Week=[
+            'Saturday',
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+        ];
       $Category=  Category::query()->whereRestaurant()->get();
-        return  view('Restaurant.restaurantCreate',compact('Category'));
+        return  view('Restaurant.restaurantCreate',compact('Category','Week'));
     }
 
     /**
@@ -45,7 +54,12 @@ class RestaurantController extends Controller
      */
     public function store(StoreRestaurantRequest $request)
     {
-        //
+        dd
+        (
+            $request->all(),
+            // \App\Classes\TimeRestaurantHandler::getDepartMinAndHourTurnToH_M($request->all())
+            
+        );
     }
 
     /**

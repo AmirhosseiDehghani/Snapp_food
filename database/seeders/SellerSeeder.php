@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Date;
 use App\Models\Restaurant;
 use App\Models\Seller;
 use App\Models\User;
@@ -23,8 +24,19 @@ class SellerSeeder extends Seeder
       Restaurant::factory(rand(1,2))->has
       (
         Category::factory(rand(1,3))
+      )->has(
+        Date::factory()
       ),
     )->create();
+    
+    // User::factory(10)->create()
+    //   ->each(function($user)
+    //   {
+    //     Restaurant::factory(rand(1,2))->create()
+    //       ->each(function())
+    //     ;
+    //   })
+    // ;
     
     $users=User::all();
     foreach($users as $user)

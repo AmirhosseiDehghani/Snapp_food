@@ -36,11 +36,16 @@ class CreateNewUser implements CreatesNewUsers
 
         ])->validate();
 
-        return Seller::create([
+        $user= User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'phone' => $input['phone'],
             'password' => Hash::make($input['password']),
         ]);
+
+        $user->assignRole('Seller');
+        
+        return $user;
+
     }
 }

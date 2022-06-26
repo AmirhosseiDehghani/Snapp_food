@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Support\Str;
 class StoreRestaurantRequest extends FormRequest
 {
     /**
@@ -22,7 +22,15 @@ class StoreRestaurantRequest extends FormRequest
      * @return array<string, mixed>
      */
     public function rules()
-    {
+    {   
+        $time=[];
+        
+        foreach(request()->all() as $kay=>$data)
+        {
+            if(Str::startsWith($kay,"Start_h")){
+                
+            }
+        }
         return [
             //
         ];
