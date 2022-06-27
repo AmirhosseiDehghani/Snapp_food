@@ -15,8 +15,8 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
-        // dd(auth()->check() and (auth()->user()->hasPermissionTo('seller dashboard')));
-        if( auth()->check() and auth()->user()->hasPermissionTo('admin dashboard')){
+        // dd(auth()->check() and (auth()->user()->hasRole("Admin")));
+        if( auth()->check() and auth()->user()->hasRole("Admin")){
             return to_route('Admin.home');
         }
         if( auth()->check() and (auth()->user()->hasPermissionTo('seller dashboard')) ){

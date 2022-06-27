@@ -53,10 +53,10 @@
                             <i class="bi bi-tags-fill"></i> <span class="ms-1 d-none d-sm-inline">Category</span> </a>
                         <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                             <li class="w-100">
-                                <a href="{{route("Admin.CategoryOfFood.index")}}" class="nav-link px-0"> <span class="d-none d-sm-inline">Food</span>  </a>
+                                <a href="{{route("Admin.Food.index")}}" class="nav-link px-0"> <span class="d-none d-sm-inline">Food</span>  </a>
                             </li>
                             <li>
-                                <a href="{{route('Admin.CategoryOfRestaurant.index')}}" class="nav-link px-0"> <span class="d-none d-sm-inline">Restaurant</span>  </a>
+                                <a href="{{route('Admin.Restaurant.index')}}" class="nav-link px-0"> <span class="d-none d-sm-inline">Restaurant</span>  </a>
                             </li>
                         </ul>
                     </li>

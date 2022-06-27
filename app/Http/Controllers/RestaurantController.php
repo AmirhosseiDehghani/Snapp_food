@@ -6,14 +6,19 @@ use App\Models\Restaurant;
 use App\Http\Requests\StoreRestaurantRequest;
 use App\Http\Requests\UpdateRestaurantRequest;
 use App\Models\Category;
+use App\Models\Images;
 use App\Models\User;
+use Faker\Provider\Image;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class RestaurantController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Restaurant::class, 'restaurant');
+       // TODO: باگ نمیتونم وارد صفحه نمایش بشم توسط پالسی 
+
+        // $this->authorizeResource(Restaurant::class, 'restaurant');
     }
     /**
      * Display a listing of the resource.
@@ -52,7 +57,6 @@ class RestaurantController extends Controller
       $Category=  Category::query()->whereRestaurant()->get();
         return  view('Restaurant.restaurantCreate',compact('Category','Week'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -61,19 +65,17 @@ class RestaurantController extends Controller
      */
     public function store(StoreRestaurantRequest $request)
     {
-        // dd
-        // (
-        //     // $request->all()  
-        // //     // \App\Classes\TimeRestaurantHandler::getDepartMinAndHourTurnToH_M($request->all())
-        //     $request->validated()
-        // );
+       $image_path= Storage::put('images', $request->validated()['image']);
 
+       
+        // dd($request->all(),$test);
         $user=User::find(auth()->id());
         $Category=Category::find($request->validated()['category']);
         
         $Restaurant=Restaurant::create($request->validated());
 
         $Restaurant->address()->create($request->validated());
+        $Restaurant->images()->create(['image_path'=>$image_path]);
 
         $Restaurant->categories()->save($Category);
         $Restaurant->users()->save($user);
@@ -87,9 +89,19 @@ class RestaurantController extends Controller
      * @param  \App\Models\Restaurant  $restaurant
     //  * @return \Illuminate\Http\Response
      */
-    public function show(Restaurant $restaurant)
+    public function show(Restaurant $restaurant,$id)
     {
         
+        $Restaurant=$restaurant->find($id);
+        // $Address=$Restaurant->address;
+        $Categories=$Restaurant->Category;
+
+        // TODO Add&Edit&Delete food See&Change status order   
+        // $Food=$Restaurant->food
+
+        // dd($id);
+        // Restaurant_show_id
+        return view('Restaurant.restaurantShow',compact('Restaurant',));
     }
 
     /**
@@ -98,9 +110,10 @@ class RestaurantController extends Controller
      * @param  \App\Models\Restaurant  $restaurant
     //  * @return \Illuminate\Http\Response
      */
-    public function edit(Restaurant $restaurant)
+    public function edit(Restaurant $restaurant,$id)
     {
-        //
+        $Restaurant=$restaurant->find($id);
+        return view('Restaurant.restaurantEdit');
     }
 
     /**

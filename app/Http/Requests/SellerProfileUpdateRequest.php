@@ -17,8 +17,9 @@ class SellerProfileUpdateRequest extends FormRequest
     public function authorize()
     {
 
+        return true;
         // dd(Gate::allows('Seller'));
-        return  (Gate::allows('Seller'));
+        // return  (Gate::allows('Seller'));
 
     }
 

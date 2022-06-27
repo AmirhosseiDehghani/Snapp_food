@@ -87,12 +87,15 @@
                 </div>
                
                 <div class="col"  >
-                    <x-mapbox id="mapId" style="height: 500px; width: 500px;"  :draggable="true"/>
-                </div>                   
+                    <x-mapbox id="mapId"  style="height: 500px; width: 500px;"  :draggable="true"/>
+                </div>
+                               
                 
-                
+                <input id="lat" type="hidden" name="lat" value="">
+                <input id="long" type="hidden" name="long" value="">
+
                 <div class="col p-3">
-                    <button type="submit" class="btn btn-success">Add</button>
+                    <button  type="submit" class="btn btn-success">Add</button>
                 </div>
             </form>
             </div>
@@ -117,10 +120,13 @@
 @push('script')
 <script>
     marker.on('dragend', function(e) {
-    here you can get the coordinates as follows 
-    e.target.getLngLat().lng : to get the longitude
-    e.target.getLngLat().lat : to get the latitude
-});
-   
+    // here you can get the coordinates as follows 
+    // e.target.getLngLat().lng : to get the longitude
+    // e.target.getLngLat().lat : to get the latitude
+    document.getElementById('lat').value=e.target.getLngLat().lat
+    document.getElementById('long').value=e.target.getLngLat().lng
+});   
 </script>
+
+
 @endpush

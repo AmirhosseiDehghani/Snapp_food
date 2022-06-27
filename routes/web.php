@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminCategoryFood;
 use App\Http\Controllers\Admin\AdminCategoryRestaurant;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminDiscount;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RestaurantController;
@@ -19,6 +20,22 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route::post('/test',function(){
+
+
+//     redirect('/test');
+// return response()->json(request('successful'));
+
+
+// });
+
+// Route::get('/test',function(){
+
+// return response()->json(request('lat'));
+
+// // return response()->json('hello');
+
+// });
 
 Route::view('/','home')->name('home');
 
@@ -32,7 +49,7 @@ Route::middleware('auth')->group(function (){
     // Admin
     Route::middleware('isAdmin')->name('Admin.')->prefix('/Admin')->group(function()
     {
-        Route::get('/home',[App\Http\Controllers\Admin\AdminController::class, 'index'])->name('home');
+        Route::get('/home',[AdminController::class, 'index'])->name('home');
 
         Route::resource('Category/Restaurant',AdminCategoryRestaurant::class)->except(['edit','create']);
         Route::resource('Category/Food',AdminCategoryFood::class)->only(['index','show','store']);

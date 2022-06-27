@@ -16,7 +16,7 @@ class Restaurant extends Model
         'phone',
         // 'address',
         'account',
-        'have_images',
+        // 'have_images',
     ];
     // protected $guarded=[
     //     'id'
@@ -48,6 +48,11 @@ class Restaurant extends Model
     {
         return $this->morphOne(Address::class,'addressable');
     }
+    public function images()
+    {
+        return $this->morphMany(Images::class,'imagesable');
+    }
+    
     
     
 

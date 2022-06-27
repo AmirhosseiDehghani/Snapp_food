@@ -49,5 +49,6 @@ class SellerSeeder extends Seeder
       }
     }
 
-    }
+
+  }
 }

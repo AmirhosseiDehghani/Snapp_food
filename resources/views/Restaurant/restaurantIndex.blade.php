@@ -36,15 +36,15 @@
                             <div class="btn-group bg-primary" role="group" aria-label="Basic example">
                               <form action="{{route('Seller.Restaurant.edit',$Resruarant)}}" method="GET" >
                                  @csrf
-                                <button type="button" class="btn btn-info">edit</button>
+                                <button type="submit" class="btn btn-info">edit</button>
                                 </form> 
-                              <form action="{{route('Seller.Restaurant.delete',$Resruarant)}}" method="POST">
+                              <form action="{{route('Seller.Restaurant.destroy',$Resruarant)}}" method="POST">
                                  @csrf
-                                <button type="button" class="btn btn-danger">delete</button>
+                                <button type="submit" class="btn btn-danger">delete</button>
                                 </form> 
-                              <form action="{{route('Seller.Restaurant.show')}}" method="get">
+                              <form action="{{route('Seller.Restaurant.show',$Resruarant)}}" method="get">
                                  @csrf
-                                <button type="button" class="btn btn-primary">see</button>
+                                <button type="submit" class="btn btn-primary">see</button>
                                 </form> 
                             </div>
                         </td>

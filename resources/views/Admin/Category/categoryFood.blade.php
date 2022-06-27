@@ -5,7 +5,7 @@
 <div class="row ">
     <div class="col">
         <div class="">
-            <form action="{{route('Admin.CategoryOfFood.store')}}" method="POST">
+            <form action="{{route('Admin.Food.store')}}" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col mb-3">
@@ -78,7 +78,7 @@
                         <td colspan="" >
                             
                             <div>
-                                <form action="{{route('Admin.CategoryOfRestaurant.destroy',$Category)}}" method="POST" >
+                                <form action="{{route('Admin.Restaurant.destroy',$Category)}}" method="POST" >
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-danger" type="submit"><i class="bi bi-trash3-fill"></i></button>
@@ -119,7 +119,7 @@
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form method="post" action='{{route('Admin.CategoryOfRestaurant.update',$Category)}}'>
+                            <form method="post" action='{{route('Admin.Restaurant.update',$Category)}}'>
                                 @csrf
                                 @method('put')
                             <div class="modal-body">

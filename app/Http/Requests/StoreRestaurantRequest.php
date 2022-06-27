@@ -58,8 +58,10 @@ class StoreRestaurantRequest extends FormRequest
             'phone'=>['required',(new IranPhoneNumberRule)],
             'address'=>'required|string',
             'category'=>'required|string',
-            'image'=>'image|mimes:jpg,png',
+            'image'=>'image|required|mimes:jpg,png|max:5054',
             "account"=>'numeric|digits:16',
+            "lat"=>'numeric',
+            "long"=>'numeric',
         ];
     }
 }

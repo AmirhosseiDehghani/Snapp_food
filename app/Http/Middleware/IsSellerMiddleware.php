@@ -17,7 +17,9 @@ class IsSellerMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->hasRole('Seller') )
+        // dd(auth()->user()->can('seller dashboard'));
+
+        if(auth()->user()->hasRole('Seller') or auth()->user()->hasRole('Admin') )
         return $next($request);
         
         abort(403,'you do not allow');

@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         
         $admin=User::query()->create([
                 'name'=>'admin',
-                'email'=>'admin@adminss.com',
+                'email'=>'admin@admin.com',
                 'password'=>Hash::make(123)
             ]);
         // $admin->assignRole('Admin');
@@ -47,6 +47,7 @@ class DatabaseSeeder extends Seeder
             // RestaurantSeeder::class,
             
         ]);
+
 
         // \App\Models\User::factory(10)->create();
 
