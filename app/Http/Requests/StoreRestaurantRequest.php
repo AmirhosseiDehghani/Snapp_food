@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\IranPhoneNumberRule;
+use App\Rules\OpenTimeMustLessCloseTimeAndActiveDay;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 class StoreRestaurantRequest extends FormRequest
@@ -23,16 +25,41 @@ class StoreRestaurantRequest extends FormRequest
      */
     public function rules()
     {   
-        $time=[];
-        
-        foreach(request()->all() as $kay=>$data)
-        {
-            if(Str::startsWith($kay,"Start_h")){
+        // $Week=
+        // [
+        //     'Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday',
+        // ];
+        // $valDay=[];
+        // foreach($Week as $day)
+        // {
+        //     $a=[
+        //         $day.'_S'=>[(new OpenTimeMustLessCloseTimeAndActiveDay(request()->all()[$day.'_E'],request()->all()[($day.'_isActive')]?? true))  ],
+        //         $day.'_E'=>[(new OpenTimeMustLessCloseTimeAndActiveDay(request()->all()[$day.'_S'],request()->all()[($day.'_isActive')]?? true))  ],
+        //     ];
+        //     $b=[];
+        //     if(array_key_exists($day.'_isActive',request()->all() )){
                 
-            }
-        }
+        //         $b=[$day.'_isActive'=>'nullable'];
+        //     }
+        //     $valDay=array_merge($valDay,$a,$b);
+        // }
+        // // dd(request()->all());
+        // $valDay=array_merge($valDay,[
+        //     'name'=>'required|string',
+        //     'phone'=>['required',(new IranPhoneNumberRule)],
+        //     'address'=>'required|string',
+        //     'category'=>'required|string',
+            
+        // ]);
+        // return$valDay;
+
         return [
-            //
+            'name'=>'required|string',
+            'phone'=>['required',(new IranPhoneNumberRule)],
+            'address'=>'required|string',
+            'category'=>'required|string',
+            'image'=>'image|mimes:jpg,png',
+            "account"=>'numeric|digits:16',
         ];
     }
 }

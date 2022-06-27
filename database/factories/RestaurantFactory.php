@@ -21,9 +21,9 @@ class RestaurantFactory extends Factory
             'name'=>"Restaurant ".$this->faker->name(),
             // 'category'=>$this->faker->title(),
             'phone'=>$this->faker->phoneNumber(),
-            'address'=>$this->faker->address(),
+            // 'address'=>$this->faker->address(),
             'account'=>$this->faker->randomNumber(6),
-            'user_id'=>Seller::factory(),
+            // 'user_id'=>Seller::factory(),
         ];
     }
 }

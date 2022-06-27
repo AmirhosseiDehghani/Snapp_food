@@ -7,12 +7,13 @@ use App\Http\Requests\StoreRestaurantRequest;
 use App\Http\Requests\UpdateRestaurantRequest;
 use App\Models\Category;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class RestaurantController extends Controller
 {
     public function __construct()
     {
-        // $this->authorizeResource(Restaurant::class, 'post');
+        $this->authorizeResource(Restaurant::class, 'restaurant');
     }
     /**
      * Display a listing of the resource.
@@ -21,7 +22,13 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        //
+        $user=auth()->user();
+        // $Restaurants= Restaurant::query()->whereMorphRelation((new Restaurant)-> users(),User::class,'user_id')->get();
+        $Restaurants=$user->restaurants()->paginate(10);
+        // $address=$user->restaurants()->address;
+
+        // dd($Restaurants);
+        return  view('Restaurant.restaurantIndex',compact('Restaurants'));
     }
 
     /**
@@ -54,12 +61,24 @@ class RestaurantController extends Controller
      */
     public function store(StoreRestaurantRequest $request)
     {
-        dd
-        (
-            $request->all(),
-            // \App\Classes\TimeRestaurantHandler::getDepartMinAndHourTurnToH_M($request->all())
-            
-        );
+        // dd
+        // (
+        //     // $request->all()  
+        // //     // \App\Classes\TimeRestaurantHandler::getDepartMinAndHourTurnToH_M($request->all())
+        //     $request->validated()
+        // );
+
+        $user=User::find(auth()->id());
+        $Category=Category::find($request->validated()['category']);
+        
+        $Restaurant=Restaurant::create($request->validated());
+
+        $Restaurant->address()->create($request->validated());
+
+        $Restaurant->categories()->save($Category);
+        $Restaurant->users()->save($user);
+        
+        return to_route('Seller.Restaurant.index');
     }
 
     /**
@@ -70,7 +89,7 @@ class RestaurantController extends Controller
      */
     public function show(Restaurant $restaurant)
     {
-        //
+        
     }
 
     /**

@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string('name');
             // $table->foreignIdFor(Category::class)->nullable()->constrained();
             $table->string('phone');
-            $table->string('address');
+            // $table->string('address');
             $table->string('account');
             $table->boolean('have_images')->default(false);
-            $table->foreignIdFor(User::class)->constrained();
+            // $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();
         });
     }

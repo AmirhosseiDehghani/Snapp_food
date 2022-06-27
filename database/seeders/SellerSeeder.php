@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
 use App\Models\Category;
 use App\Models\Date;
 use App\Models\Restaurant;
@@ -26,6 +27,8 @@ class SellerSeeder extends Seeder
         Category::factory(rand(1,3))
       )->has(
         Date::factory()
+      )->has(
+        Address::factory()
       ),
     )->create();
     

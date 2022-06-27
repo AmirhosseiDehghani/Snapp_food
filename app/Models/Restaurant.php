@@ -12,12 +12,15 @@ class Restaurant extends Model
     protected $fillable=
     [
         'name',
-        'category',
+        // 'category',
         'phone',
-        'address',
+        // 'address',
         'account',
         'have_images',
     ];
+    // protected $guarded=[
+    //     'id'
+    // ];
     protected $hidden=
     [
         'have_image'
@@ -28,17 +31,22 @@ class Restaurant extends Model
     {
         return $this->morphToMany(Category::class, 'categorizable');
     }
-    public function seller()
-    {
-        return $this->belongsTo(Seller::class,'user_id','id');
-    }
+    // public function seller()
+    // {
+    //     return $this->belongsTo(Seller::class,'user_id','id');
+    // }
     public function users()
     {
         return $this->morphToMany(User::class, 'userable');
     }
+    
     public function date()
     {
         return $this->hasOne(Date::class);
+    }
+    public function address()
+    {
+        return $this->morphOne(Address::class,'addressable');
     }
     
     

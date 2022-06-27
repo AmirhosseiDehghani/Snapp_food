@@ -7,10 +7,9 @@
     <div class="col-12">
         <div class="p-5">
             <h1>Add Resturant</h1>
-
         </div>
     </div>
-    <div class="col">
+    <div class="col ">
         <form action="{{route("Seller.Restaurant.store")}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row justify-content-start row-cols-sm-1 row-cols-md-3 row-cols-lg-4">
@@ -30,6 +29,17 @@
                     <input name="phone" value="{{old('phone')}}" type="text" class="form-control" id="exampleInput-phone" aria-describedby="emailHelp">
                     <div id="emailHelp" class="form-text">
                         @error('phone') 
+                        <div class="alert alert-danger" role="alert">
+                            {{$message}}
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col mb-3 ">
+                    <label for="exampleInput-account" class="form-label fw-bolder">Account</label>
+                    <input name="account" value="{{old('account')}}" type="text" class="form-control" id="exampleInput-account" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">
+                        @error('account') 
                         <div class="alert alert-danger" role="alert">
                             {{$message}}
                         </div>
@@ -66,7 +76,7 @@
                 <div class="col mb-3 ">
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Chose picture</label>
-                        <input class="form-control" type="file" id="formFile">
+                        <input name="image" class="form-control" type="file" id="formFile">
                     </div>
                         @error('image') 
                         <div class="alert alert-danger" role="alert">
@@ -75,60 +85,42 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col">
-                    <table class="table">
-                        <thead>
-                          <tr>
-                            <th scope="col">Day</th>
-                            <th scope="col">Open</th>
-                            <th scope="col"></th>
-                            <th scope="col">Close </th>
-                            <th scope="col">you DeaActive</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($Week as $kay=>$day)
-                            <tr>
-                                <th scope="row">{{$day}}</th>
-                                <td>
-                                    <div class="d-flex ">
-                                        <div>
-                                            <input value="{{old("$day"."_S")}}" name="{{$day}}_S" class="form-control form-control-sm " type="time" placeholder="Hour" aria-label=".form-control-sm example">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    
-                                </td>
-                                <td>
-                                    <div class="d-flex">
-                                        <div>
-                                            <input value="{{old("$day"."_E")}}" name="{{$day}}_E" class="form-control form-control-sm " type="time" placeholder="Hour" aria-label=".form-control-sm example">
-                                        </div>                                       
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-check">
-                                        <input name="{{"$day"."_isActive"}}"  class="form-check-input" type="checkbox" value="0" id="flexCheckDefault"  {{ (! empty(old('use_signature')) ? 'checked' : '') }}>
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                          
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                      </table>
-                </div>
+               
+                <div class="col"  >
+                    <x-mapbox id="mapId" style="height: 500px; width: 500px;"  :draggable="true"/>
+                </div>                   
                 
-                <div class="col">
+                
+                <div class="col p-3">
                     <button type="submit" class="btn btn-success">Add</button>
                 </div>
+            </form>
             </div>
             
-        </form>
+        {{-- <div class="col">
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        </div> --}}
 
     </div>
 </div>
     
 @endsection
+
+@push('script')
+<script>
+    marker.on('dragend', function(e) {
+    here you can get the coordinates as follows 
+    e.target.getLngLat().lng : to get the longitude
+    e.target.getLngLat().lat : to get the latitude
+});
+   
+</script>
+@endpush

@@ -18,7 +18,7 @@ class RestaurantPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->can('seller dashboard');
     }
 
     /**
@@ -30,7 +30,18 @@ class RestaurantPolicy
      */
     public function view(User $user, Restaurant $restaurant)
     {
-        //
+        // if($user->hasRole('Admin')){
+        //     return true;
+        // }
+        if(! $user->can('seller dashboard')){
+            return false;
+        }
+        // $UserOfRestaurants= $user->restaurants;
+        // foreach($UserOfRestaurants as $UserOfRestaurant){
+        // if($UserOfRestaurant->id==$restaurant->id){
+        //     return true;
+        // }
+        return true;
     }
 
     /**
@@ -41,7 +52,8 @@ class RestaurantPolicy
      */
     public function create(User $user)
     {
-        //
+        
+      return  $user->can('add restaurant');
     }
 
     /**
@@ -53,7 +65,23 @@ class RestaurantPolicy
      */
     public function update(User $user, Restaurant $restaurant)
     {
-        //
+        if($user->hasRole('Admin')){
+            return true;
+        }
+        if(! $user->can('add restaurant')){
+            return false;
+        }
+        
+       $UserOfRestaurants= $user->restaurants;
+
+       foreach($UserOfRestaurants as $UserOfRestaurant)
+       {
+            if($UserOfRestaurant->id==$restaurant->id){
+                return true;
+            }
+       }
+        return false;
+       
     }
 
     /**
@@ -65,8 +93,25 @@ class RestaurantPolicy
      */
     public function delete(User $user, Restaurant $restaurant)
     {
-        //
+        if($user->hasRole('Admin')){
+            return true;
+        }
+        if(! $user->can('delete restaurant')){
+            return false;
+        }
+        
+       $UserOfRestaurants= $user->restaurants;
+
+       foreach($UserOfRestaurants as $UserOfRestaurant)
+        { 
+            if($UserOfRestaurant->id==$restaurant->id){
+                return true;
+            }
+        }
+        return false;
     }
+    
+    
 
     /**
      * Determine whether the user can restore the model.
@@ -77,7 +122,7 @@ class RestaurantPolicy
      */
     public function restore(User $user, Restaurant $restaurant)
     {
-        //
+        return $user->hasRole('Admin');
     }
 
     /**
@@ -89,6 +134,7 @@ class RestaurantPolicy
      */
     public function forceDelete(User $user, Restaurant $restaurant)
     {
-        //
+       return $user->hasRole('Admin');
     }
 }
+
