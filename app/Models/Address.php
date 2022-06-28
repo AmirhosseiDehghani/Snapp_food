@@ -13,7 +13,7 @@ class Address extends Model
     [
         'address',
         'lat',
-        'lang',
+        'long',
     ];
     // protected $visible=[
 

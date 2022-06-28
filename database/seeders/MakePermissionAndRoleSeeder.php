@@ -57,6 +57,7 @@ class MakePermissionAndRoleSeeder extends Seeder
 
             'add restaurant',
             'delete restaurant',
+            'edits restaurant',
             'see restaurant',
 
             'see food',

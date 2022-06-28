@@ -56,10 +56,10 @@ class StoreRestaurantRequest extends FormRequest
         return [
             'name'=>'required|string',
             'phone'=>['required',(new IranPhoneNumberRule)],
-            'address'=>'required|string',
             'category'=>'required|string',
             'image'=>'image|required|mimes:jpg,png|max:5054',
             "account"=>'numeric|digits:16',
+            'address'=>'required|string',
             "lat"=>'numeric',
             "long"=>'numeric',
         ];

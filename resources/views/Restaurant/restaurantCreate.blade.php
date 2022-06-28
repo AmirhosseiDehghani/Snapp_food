@@ -117,6 +117,7 @@
     
 @endsection
 
+
 @push('script')
 <script>
     marker.on('dragend', function(e) {
@@ -127,6 +128,4 @@
     document.getElementById('long').value=e.target.getLngLat().lng
 });   
 </script>
-
-
 @endpush

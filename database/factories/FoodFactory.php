@@ -3,12 +3,11 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\address>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Food>
  */
-class AddressFactory extends Factory
+class FoodFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,9 +17,7 @@ class AddressFactory extends Factory
     public function definition()
     {
         return [
-            'address'=>$this->faker->address,
-            'lat'=>Str::random(),
-            'long'=>Str::random(),
+            //
         ];
     }
 }

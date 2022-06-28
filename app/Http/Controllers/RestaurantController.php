@@ -113,7 +113,14 @@ class RestaurantController extends Controller
     public function edit(Restaurant $restaurant,$id)
     {
         $Restaurant=$restaurant->find($id);
-        return view('Restaurant.restaurantEdit');
+        $Address=$Restaurant->address;
+        $Week=['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday',];
+        $Times=$Restaurant->Dates;
+    
+        // dd($Restaurant,$Address);
+        return view('Restaurant.restaurantEdit',compact('Restaurant','Address','Week','Times'));
+
+        // Restaurant::all()->isEmpty()
     }
 
     /**
@@ -123,9 +130,9 @@ class RestaurantController extends Controller
      * @param  \App\Models\Restaurant  $restaurant
     //  * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRestaurantRequest $request, Restaurant $restaurant)
+    public function update(UpdateRestaurantRequest $request, Restaurant $restaurant,$id)
     {
-        //
+        Restaurant::find($id)->update($request->validated());
     }
 
     /**
@@ -136,6 +143,6 @@ class RestaurantController extends Controller
      */
     public function destroy(Restaurant $restaurant)
     {
-        //
+        
     }
 }

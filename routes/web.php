@@ -6,9 +6,13 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminDiscount;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\Seller\RestaurantAddressUpdateController;
+use App\Http\Controllers\Seller\RestaurantCategoryController;
+use App\Http\Controllers\Seller\RestaurantDateController;
 use App\Http\Controllers\Seller\SellerSiteController;
 use App\Http\Controllers\Seller\SellerUpdateController;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\TextUI\XmlConfiguration\Group;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,7 +71,21 @@ Route::middleware('auth')->group(function (){
         Route::put('/profile',SellerUpdateController::class)->name('profile.update');
         
         Route::resource('/Restaurant',RestaurantController::class);
-        
+        Route::name('Restaurant.')->group(function(){
+            
+            Route::put('Seller/Restaurant/{Restaurant}/Update/Address',RestaurantAddressUpdateController::class)
+            ->name('updateAddress')->whereNumber('Restaurant');
+
+            Route::delete('Seller/Restaurant/{Restaurant}/Delete/Category',[RestaurantCategoryController::class,'destroy'])
+            ->name('deleteCategory')->whereNumber('Restaurant');
+            Route::post('Seller/Restaurant/{Restaurant}/add/Category',[RestaurantCategoryController::class,'store'])
+            ->name('addCategory')->whereNumber('Restaurant');
+
+            Route::post('Seller/Restaurant/{Restaurant}/Add/Day',[RestaurantDateController::class,'store'])
+            ->name('addDay')->whereNumber('Restaurant');
+            Route::delete('Seller/Restaurant/{Restaurant}/delete/Day',[RestaurantDateController::class,'destroy'])
+            ->name('deleteDay')->whereNumber('Restaurant');
+        });
     });
     
 

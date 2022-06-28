@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\IranPhoneNumberRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRestaurantRequest extends FormRequest
+class StoreFoodRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class UpdateRestaurantRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -25,10 +24,7 @@ class UpdateRestaurantRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|string',
-            'phone'=>['required',(new IranPhoneNumberRule)],
-            'category'=>'required|string',
-            "account"=>'numeric|digits:16',
+            //
         ];
     }
 }

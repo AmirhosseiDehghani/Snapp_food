@@ -40,9 +40,10 @@
                                 </form> 
                               <form action="{{route('Seller.Restaurant.destroy',$Resruarant)}}" method="POST">
                                  @csrf
+                                 @method('delete')
                                 <button type="submit" class="btn btn-danger">delete</button>
                                 </form> 
-                              <form action="{{route('Seller.Restaurant.show',$Resruarant)}}" method="get">
+                              <form action="{{route('Seller.Restaurant.show',$Resruarant)}}" method="GET">
                                  @csrf
                                 <button type="submit" class="btn btn-primary">see</button>
                                 </form> 

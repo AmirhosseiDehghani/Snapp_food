@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Restaurant;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Date>
@@ -18,17 +19,10 @@ class DateFactory extends Factory
     public function definition()
     {
         $Week=['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday',];
-        $array=
-        [
-            // 'restaurant_id'=>Restaurant::class
+        return [
+            'day'=>Arr::random($Week),
+            'open_time'=>$this->faker->time('H:i'),
+            'close_time'=>$this->faker->time('H:i'),
         ];
-        foreach ($Week as  $day) {
-        $a= [
-                ($day.'_S')=> $this->faker->time("H:i"),
-               ($day.'_E')=> $this->faker->time("H:i"),
-            ];
-            $array=  array_merge($array,$a);
-        }
-        return $array;
     }
 }

@@ -41,9 +41,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             
             // MakePermissionAndRoleSeeder::class,
-            // CategorySeeder::class,
+            CategorySeeder::class,
             // DiscountsSeeder::class,
-            SellerSeeder::class,
+            // SellerSeeder::class,
             // RestaurantSeeder::class,
             
         ]);
