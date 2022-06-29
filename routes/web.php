@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\AdminCategoryRestaurant;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminDiscount;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\RestaurantsController;
 use App\Http\Controllers\Seller\RestaurantAddressUpdateController;
 use App\Http\Controllers\Seller\RestaurantCategoryController;
 use App\Http\Controllers\Seller\RestaurantDateController;
@@ -70,7 +70,7 @@ Route::middleware('auth')->group(function (){
         // Route::get('/profile/{}/e',[SellerSiteController::class,'profile'])->name('profile');
         Route::put('/profile',SellerUpdateController::class)->name('profile.update');
         
-        Route::resource('/Restaurant',RestaurantController::class);
+        Route::resource('/Restaurant',RestaurantsController::class);
         Route::name('Restaurant.')->group(function(){
             
             Route::put('Seller/Restaurant/{Restaurant}/Update/Address',RestaurantAddressUpdateController::class)

@@ -12,13 +12,13 @@ use Faker\Provider\Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class RestaurantController extends Controller
+class RestaurantsController extends Controller
 {
     public function __construct()
     {
        // TODO: باگ نمیتونم وارد صفحه نمایش بشم توسط پالسی 
 
-        // $this->authorizeResource(Restaurant::class, 'restaurant');
+        // $this->authorizeResource(Restaurant::class );
     }
     /**
      * Display a listing of the resource.
@@ -27,6 +27,7 @@ class RestaurantController extends Controller
      */
     public function index()
     {
+        
         $user=auth()->user();
         // $Restaurants= Restaurant::query()->whereMorphRelation((new Restaurant)-> users(),User::class,'user_id')->get();
         $Restaurants=$user->restaurants()->paginate(10);
@@ -91,7 +92,7 @@ class RestaurantController extends Controller
      */
     public function show(Restaurant $restaurant,$id)
     {
-        
+        // $id=11;
         $Restaurant=$restaurant->find($id);
         // $Address=$Restaurant->address;
         $Categories=$Restaurant->Category;

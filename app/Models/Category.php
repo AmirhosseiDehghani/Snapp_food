@@ -22,7 +22,11 @@ class Category extends Model
    
     public function restaurants()
     {
-        return $this->morphedByMany(Restaurant::class, 'taggable');
+        return $this->morphedByMany(Restaurant::class, 'categorizable');
+    }
+    public function food()
+    {
+        return $this->morphedByMany(Food::class, 'categorizable');
     }
 
     //------------- Scope---------------//

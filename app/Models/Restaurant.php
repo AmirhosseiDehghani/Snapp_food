@@ -52,6 +52,10 @@ class Restaurant extends Model
     {
         return $this->morphMany(Images::class,'imagesable');
     }
+    public function food()
+    {
+        return $this->hasMany(Food::class);
+    }
     
     
     

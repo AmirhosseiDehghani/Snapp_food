@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Address;
 use App\Models\Category;
 use App\Models\Date;
+use App\Models\Food;
 use App\Models\Restaurant;
 use App\Models\Seller;
 use App\Models\User;
@@ -25,10 +26,14 @@ class SellerSeeder extends Seeder
       Restaurant::factory(rand(1,2))->has
       (
         Category::factory(rand(1,3))
-      )->has(
-        Date::factory()
-      )->has(
+      )->has
+      (
+        Date::factory(rand(3,7))
+      )->has
+      (
         Address::factory()
+      )->has(
+        Food::factory(rand(5,20))
       ),
     )->create();
     
