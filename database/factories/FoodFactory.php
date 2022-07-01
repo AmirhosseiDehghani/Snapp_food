@@ -17,7 +17,8 @@ class FoodFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name'=>$this->faker->title(),
+            'price'=>$this->faker->numberBetween(5000,100000),
         ];
     }
 }

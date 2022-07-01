@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Address;
 use App\Models\Category;
 use App\Models\Date;
+use App\Models\Discounts;
 use App\Models\Food;
 use App\Models\Restaurant;
 use App\Models\Seller;
@@ -21,9 +22,10 @@ class SellerSeeder extends Seeder
   public function run()
   {
 
-    User::factory(10)->has
+    User::factory(20)->has
     (
-      Restaurant::factory(rand(1,2))->has
+      Restaurant::factory(rand(1,2))
+      ->has
       (
         Category::factory(rand(1,3))
       )->has
@@ -32,10 +34,34 @@ class SellerSeeder extends Seeder
       )->has
       (
         Address::factory()
-      )->has(
+      )
+      ->has
+      (
         Food::factory(rand(5,20))
-      ),
+        ->has
+        (
+          Discounts::factory(1)
+        )
+        ->has
+        (
+          Category::factory()
+        )
+      )
     )->create();
+
+    $a= Restaurant::all()->load('categories');
+    // dd($a);
+    // return $a;
+    foreach($a as $per){
+        $per->categories()->update(['type'=>'restaurant']);
+    }
+
+    $food= Food::all()->load('categories');
+    // dd($food);
+    // return $food;
+    foreach($food as $per){
+        $per->categories()->update(['type'=>'food']);
+    }
     
     // User::factory(10)->create()
     //   ->each(function($user)

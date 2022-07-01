@@ -51,6 +51,11 @@ class User extends Authenticatable
     {
         return $this->morphedByMany(Restaurant::class,'userable');
     }
+    public function addresses()
+    {
+        return $this->morphMany(Address::class,'addressable');
+    }
+
     
 
 

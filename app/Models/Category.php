@@ -15,6 +15,9 @@ class Category extends Model
         'description',
         'type',
     ];
+    protected $hidden=[
+        
+    ];
     //------------- Relationship---------------//
      /**
      * Get all of Category tags for the post.

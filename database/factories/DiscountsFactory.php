@@ -23,7 +23,7 @@ class DiscountsFactory extends Factory
             $name='Discount%'.$random;
         }else{
             $random=random_int(10000,25000);
-            $name= $this->faker()->name();
+            $name= $this->faker->name();
             
         }
         

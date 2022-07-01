@@ -71,6 +71,7 @@ class RestaurantPolicy
     public function update(User $user, Restaurant $restaurant)
     {
 
+        // return true;
 
         if($user->hasRole('Admin')){
             return true;

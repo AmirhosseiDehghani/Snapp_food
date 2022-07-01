@@ -11,9 +11,12 @@ use App\Http\Controllers\Seller\RestaurantCategoryController;
 use App\Http\Controllers\Seller\RestaurantDateController;
 use App\Http\Controllers\Seller\SellerSiteController;
 use App\Http\Controllers\Seller\SellerUpdateController;
+use App\Models\Category;
+use App\Models\Food;
+use App\Models\Restaurant;
 use Illuminate\Support\Facades\Route;
 use PHPUnit\TextUI\XmlConfiguration\Group;
-
+use Illuminate\Database\Eloquent\Builder;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,13 +36,20 @@ use PHPUnit\TextUI\XmlConfiguration\Group;
 
 // });
 
-// Route::get('/test',function(){
+Route::get('/test',function(){
 
-// return response()->json(request('lat'));
+//    $a= Category::whereFood()->food()->whereBelongsTo(Restaurant::find(1))->get();
+//    $a= Restaurant::find(1)->food()->with('categories')->get();
+        $a= Category::whereFood()->with('food')
+        ->whereHas('food',function(Builder $query)
+        {
+            $query->whereRelation('Restaurant','id','=',1);
+        })->get();
+        // $a=Food::query()->whereRelation('Restaurant','id','=',1)->get();
+   
+return $a;
 
-// // return response()->json('hello');
-
-// });
+});
 
 Route::view('/','home')->name('home');
 

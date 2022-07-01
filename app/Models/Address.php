@@ -11,13 +11,20 @@ class Address extends Model
 
     protected $fillable=
     [
+        'title',
         'address',
         'lat',
         'long',
+        'default'
     ];
-    // protected $visible=[
-
-    // ];
+    protected $visible=[
+        'id',
+        'title',
+        'address',
+        'lat',
+        'long',
+        'default'
+    ];
     // ------------- Relationship
     public function addressable()
     {

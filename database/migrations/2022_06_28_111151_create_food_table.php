@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Discounts;
+use App\Models\Restaurant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,8 @@ return new class extends Migration
             $table->string('name');
             $table->integer('price');
             $table->boolean('is_foodparty')->default(false);
-            $table->foreignIdFor(Discounts::class)->nullable()->constrained();
+            $table->foreignIdFor(Discounts::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(Restaurant::class)->constrained();
             $table->string('make_of')->nullable();
             $table->timestamps();
         });

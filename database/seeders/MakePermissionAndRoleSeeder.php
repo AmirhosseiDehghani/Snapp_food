@@ -75,6 +75,7 @@ class MakePermissionAndRoleSeeder extends Seeder
             'see status food',
             'order food',
 
+            
             'see restaurant',
             
 

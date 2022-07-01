@@ -7,7 +7,7 @@ use App\Rules\IranPhoneNumberRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class SellerProfileUpdateRequest extends FormRequest
+class UserProfileUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,6 +17,7 @@ class SellerProfileUpdateRequest extends FormRequest
     public function authorize()
     {
 
+    
         return true;
         // dd(Gate::allows('Seller'));
         // return  (Gate::allows('Seller'));
@@ -33,7 +34,7 @@ class SellerProfileUpdateRequest extends FormRequest
         return [
             'name'=>'required',
             'email'=>'required|email',
-            'phone'=>['required',/* new IranPhoneNumberRule */],
+            'phone'=>['required', new IranPhoneNumberRule ],
         ];
     }
 }

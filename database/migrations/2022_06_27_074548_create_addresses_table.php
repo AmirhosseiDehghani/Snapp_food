@@ -17,8 +17,10 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->string('address');
-            $table->string('lat')->nullable();
-            $table->string('long')->nullable();
+            $table->string('lat');
+            $table->string('long');
+            $table->string('title')->nullable();
+            $table->string('default')->default(0);
             $table->morphs('addressable');
             $table->timestamps();
         });
