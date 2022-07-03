@@ -26,26 +26,30 @@ class RestaurantPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param  \App\Models\Restaurant  $Restaurant
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Restaurant $restaurant)
+    public function view(User $user, Restaurant $Restaurant)
     {
 
         // if($user->hasRole('Admin')){
         //     return true;
         // }
-        return true;
+        // dd('hekko');
+        // return true;
 
         if(! $user->can('seller dashboard')){
             return false;
         }
-        // $UserOfRestaurants= $user->restaurants;
-        // foreach($UserOfRestaurants as $UserOfRestaurant){
-        // if($UserOfRestaurant->id==$restaurant->id){
-        //     return true;
-        // }
-        return true;
+        $UserOfRestaurants= $user->restaurants;
+        foreach($UserOfRestaurants as $UserOfRestaurant)
+        {
+            if($UserOfRestaurant->id==$Restaurant->id)
+            {
+                return true;
+            }
+        }
+    return true;
     }
 
     /**
@@ -65,10 +69,10 @@ class RestaurantPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param  \App\Models\Restaurant  $Restaurant
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Restaurant $restaurant)
+    public function update(User $user, Restaurant $Restaurant)
     {
 
         // return true;
@@ -84,7 +88,7 @@ class RestaurantPolicy
 
        foreach($UserOfRestaurants as $UserOfRestaurant)
        {
-            if($UserOfRestaurant->id==$restaurant->id){
+            if($UserOfRestaurant->id==$Restaurant->id){
                 return true;
             }
        }
@@ -96,10 +100,10 @@ class RestaurantPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param  \App\Models\Restaurant  $Restaurant
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Restaurant $restaurant)
+    public function delete(User $user, Restaurant $Restaurant)
     {
 
         if($user->hasRole('Admin')){
@@ -113,7 +117,7 @@ class RestaurantPolicy
 
        foreach($UserOfRestaurants as $UserOfRestaurant)
         { 
-            if($UserOfRestaurant->id==$restaurant->id){
+            if($UserOfRestaurant->id==$Restaurant->id){
                 return true;
             }
         }
@@ -126,10 +130,10 @@ class RestaurantPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param  \App\Models\Restaurant  $Restaurant
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Restaurant $restaurant)
+    public function restore(User $user, Restaurant $Restaurant)
     {
 
         return $user->hasRole('Admin');
@@ -139,10 +143,10 @@ class RestaurantPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param  \App\Models\Restaurant  $Restaurant
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Restaurant $restaurant)
+    public function forceDelete(User $user, Restaurant $Restaurant)
     {
 
        return $user->hasRole('Admin');

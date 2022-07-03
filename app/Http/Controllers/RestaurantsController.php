@@ -18,7 +18,7 @@ class RestaurantsController extends Controller
     {
        // TODO: باگ نمیتونم وارد صفحه نمایش بشم توسط پالسی 
 
-        // $this->authorizeResource(Restaurant::class );
+        $this->authorizeResource(Restaurant::class , 'Restaurant');
     }
     /**
      * Display a listing of the resource.
@@ -87,14 +87,16 @@ class RestaurantsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param  \App\Models\Restaurant  $Restaurant
     //  * @return \Illuminate\Http\Response
      */
-    public function show(Restaurant $restaurant,$id)
+    public function show(Restaurant $Restaurant)
     {
         // $id=11;
-        $Restaurant=$restaurant->find($id);
+        // $this->authorize('update')
+        // $Restaurant=$Restaurant->find($id);
         // $Address=$Restaurant->address;
+        dd($Restaurant);
         $Categories=$Restaurant->Category;
 
         // TODO Add&Edit&Delete food See&Change status order   
@@ -108,12 +110,12 @@ class RestaurantsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param  \App\Models\Restaurant  $Restaurant
     //  * @return \Illuminate\Http\Response
      */
-    public function edit(Restaurant $restaurant,$id)
+    public function edit(Restaurant $Restaurant,$id)
     {
-        $Restaurant=$restaurant->find($id);
+        $Restaurant=$Restaurant->find($id);
         $Address=$Restaurant->address;
         $Week=['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday',];
         $Times=$Restaurant->Dates;
@@ -128,21 +130,21 @@ class RestaurantsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateRestaurantRequest  $request
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param  \App\Models\Restaurant  $Restaurant
     //  * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRestaurantRequest $request, Restaurant $restaurant,$id)
+    public function update(UpdateRestaurantRequest $request, Restaurant $Restaurant)
     {
-        Restaurant::find($id)->update($request->validated());
+        $Restaurant->update($request->validated());
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param  \App\Models\Restaurant  $Restaurant
     //  * @return \Illuminate\Http\Response
      */
-    public function destroy(Restaurant $restaurant)
+    public function destroy(Restaurant $Restaurant)
     {
         
     }
