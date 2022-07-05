@@ -62,7 +62,7 @@ class BuyerAddressController extends Controller
     {   
 
         // dd($address);
-        // $this->authorize('update',$address);
+        $this->authorize('update',$address);
         // dd(Gate::authorize('update',$id)); //402
         // dd(Gate::allows('update',$id));
         // if(Gate::allows('update',$address)){

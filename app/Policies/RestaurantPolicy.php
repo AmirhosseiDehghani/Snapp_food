@@ -18,7 +18,8 @@ class RestaurantPolicy
      */
     public function viewAny(User $user)
     {
-
+        // dd('viewAny');
+       
         return $user->can('seller dashboard');
     }
 
@@ -32,6 +33,7 @@ class RestaurantPolicy
     public function view(User $user, Restaurant $Restaurant)
     {
 
+        // dd('view');
         // if($user->hasRole('Admin')){
         //     return true;
         // }

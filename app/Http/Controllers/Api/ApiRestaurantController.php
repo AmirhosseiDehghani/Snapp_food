@@ -24,11 +24,15 @@ class ApiRestaurantController extends Controller
     public function restaurantFood($id)
     {
         $a= Category::whereFood()->with('food')
-        ->whereHas('food',function(Builder $query)
+        ->whereHas('food',function(Builder $query) use($id)
         {
-            $query->whereRelation('Restaurant','id','=',1);
+            $query->whereRelation('Restaurant','id','=',$id);
         })->get();
+        // $a=Category::food()->get();
+
+
         response()->json($a);
-        // return $a;
+        return $a;
+        // return 
     }
 }

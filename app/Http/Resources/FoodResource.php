@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Category;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RestaurantResource extends JsonResource
+class FoodResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,17 +15,12 @@ class RestaurantResource extends JsonResource
     public function toArray($request)
     {
         // return parent::toArray($request);
-        return [
+        return[
             'id'=>$this->id,
             'name'=>$this->name,
-            'phone'=>$this->phone,
-            'account'=>$this->account,
-
-            'categories'=> CategoriesResource::collection($this->categories)  ,
-            'dates'=> DatesResource::collection($this->dates),
-            'address'=>new AddressResource($this->address),
-            // 'is'
-
+            'price'=>$this->price,
+            'raw_material'=>$this->make_of,
+            // discounts_id
         ];
     }
 }

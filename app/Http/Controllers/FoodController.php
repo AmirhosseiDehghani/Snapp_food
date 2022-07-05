@@ -34,9 +34,9 @@ class FoodController extends Controller
      * @param  \App\Http\Requests\StoreFoodRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreFoodRequest $request)
+    public function store(StoreFoodRequest $request,$Restaurant)
     {
-        //
+        dd($Restaurant);
     }
 
     /**

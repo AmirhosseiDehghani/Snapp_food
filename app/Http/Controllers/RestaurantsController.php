@@ -96,15 +96,15 @@ class RestaurantsController extends Controller
         // $this->authorize('update')
         // $Restaurant=$Restaurant->find($id);
         // $Address=$Restaurant->address;
-        dd($Restaurant);
-        $Categories=$Restaurant->Category;
+        // dd($Restaurant);
+        $Categories=$Restaurant->Categories;
 
         // TODO Add&Edit&Delete food See&Change status order   
-        // $Food=$Restaurant->food
+        $Food=$Restaurant->food;
 
-        // dd($id);
+        // dd($Food);
         // Restaurant_show_id
-        return view('Restaurant.restaurantShow',compact('Restaurant',));
+        return view('Restaurant.restaurantShow',compact('Restaurant','Food'));
     }
 
     /**

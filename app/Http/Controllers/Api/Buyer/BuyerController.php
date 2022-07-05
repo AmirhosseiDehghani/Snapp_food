@@ -15,7 +15,7 @@ class BuyerController extends Controller
     // public function update(UserProfileUpdateRequest $request, User $user)
     public function update(Request $request, User $user)
     {
-        dd(request()->all());
+        // dd(request()->all());
       
         $validated=$request->validate([
             'name'=>'required',
@@ -27,7 +27,7 @@ class BuyerController extends Controller
         $status=$user->find(auth()->id())->update($validated);
         return[
             "status"=>$status,
-            ''
+            // ''
         ];
     }
 

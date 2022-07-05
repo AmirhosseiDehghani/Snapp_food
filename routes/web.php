@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminCategoryFood;
 use App\Http\Controllers\Admin\AdminCategoryRestaurant;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminDiscount;
+use App\Http\Controllers\FoodController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RestaurantsController;
 use App\Http\Controllers\Seller\RestaurantAddressUpdateController;
@@ -83,18 +84,29 @@ Route::middleware('auth')->group(function (){
         Route::resource('/Restaurant',RestaurantsController::class);
         Route::name('Restaurant.')->group(function(){
             
-            Route::put('Seller/Restaurant/{Restaurant}/Update/Address',RestaurantAddressUpdateController::class)
+            Route::put('/Restaurant/{Restaurant}/Update/Address',RestaurantAddressUpdateController::class)
             ->name('updateAddress')->whereNumber('Restaurant');
 
-            Route::delete('Seller/Restaurant/{Restaurant}/Delete/Category',[RestaurantCategoryController::class,'destroy'])
+            Route::delete('/Restaurant/{Restaurant}/Delete/Category',[RestaurantCategoryController::class,'destroy'])
             ->name('deleteCategory')->whereNumber('Restaurant');
-            Route::post('Seller/Restaurant/{Restaurant}/add/Category',[RestaurantCategoryController::class,'store'])
+            Route::post('/Restaurant/{Restaurant}/add/Category',[RestaurantCategoryController::class,'store'])
             ->name('addCategory')->whereNumber('Restaurant');
 
-            Route::post('Seller/Restaurant/{Restaurant}/Add/Day',[RestaurantDateController::class,'store'])
+            Route::post('/Restaurant/{Restaurant}/Add/Day',[RestaurantDateController::class,'store'])
             ->name('addDay')->whereNumber('Restaurant');
-            Route::delete('Seller/Restaurant/{Restaurant}/delete/Day',[RestaurantDateController::class,'destroy'])
+            Route::delete('/Restaurant/{Restaurant}/delete/Day',[RestaurantDateController::class,'destroy'])
             ->name('deleteDay')->whereNumber('Restaurant');
+
+            //-------------------food
+            Route::name("food.")->group(function(){
+                Route::post('Restaurant/{Restaurant}/food/',[FoodController::class,'store'])
+                ->whereNumber('Restaurant')->name('store');
+                Route::put('Restaurant/{Restaurant}/food/{Food}',[FoodController::class,'update'])
+                ->whereNumber(['Restaurant','Food'])->name('update');
+                Route::delete('Restaurant/{Restaurant}/food/{Food}',[FoodController::class,'destroy'])
+                ->whereNumber(['Restaurant','Food'])->name('destroy');
+
+            });
         });
     });
     
