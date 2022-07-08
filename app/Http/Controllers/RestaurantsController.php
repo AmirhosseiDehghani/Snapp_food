@@ -104,9 +104,9 @@ class RestaurantsController extends Controller
      * @param  \App\Models\Restaurant  $Restaurant
     //  * @return \Illuminate\Http\Response
      */
-    public function edit(Restaurant $Restaurant,$id)
+    public function edit(Restaurant $Restaurant)
     {
-        $Restaurant=$Restaurant->find($id);
+       
         $Address=$Restaurant->address;
         $Week=['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday',];
         $Times=$Restaurant->Dates;

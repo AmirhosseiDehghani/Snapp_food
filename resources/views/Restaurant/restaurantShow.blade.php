@@ -134,7 +134,7 @@
                                        <form action="{{route('Seller.Restaurant.food.destroy',['Restaurant'=>$Restaurant->id,'Food'=>$item->id] )}}" method="POST">
                                             @csrf
                                             @method('delete')
-                                            <button type="button" class="btn btn-danger">Delete</button>
+                                            <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
                                         <form action="{{route('Seller.Restaurant.food.edit',['Restaurant'=>$Restaurant->id,'Food'=>$item->id])}}" method="GET">
                                             @csrf

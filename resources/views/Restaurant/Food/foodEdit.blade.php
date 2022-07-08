@@ -60,18 +60,22 @@
                 </div>
             </div>
         </form>
-        <div class="col-12">
-            <form action="" method="post">
-                <div class="mb-3">
-                    <label for="formFile" class="form-label">Default file input example</label>
-                    <input name="image" class="form-control" type="file" id="formFile">
-                  </div>
+        {{-- @dd($Restaurant) --}}
+        <div class="col-12 pt-4">
+            <form action="{{route('Seller.Restaurant.food.image.store',['Restaurant'=>$Restaurant,'Food'=>$Food])}}" method="post">
+                <div class="row">
+
+                    <div class="col mb-3">
+                        <label for="formFile" class="form-label">Add image</label>
+                        <input name="image" class="form-control" type="file" id="formFile">
+                    </div>
+                    <div class="col-12 m-4">
+                        <button type="submit" class="btn btn-info">
+                            Add image
+                        </button>
+                    </div>
+                </div>
             </form>
-        </div>
-        <div class="col">
-            <button type="submit" class="btn btn-info">
-                Add image
-            </button>
         </div>
     </div>
 

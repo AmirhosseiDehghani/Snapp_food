@@ -40,7 +40,6 @@ class FoodController extends Controller
      */
     public function store(StoreFoodRequest $request,Restaurant $Restaurant)
     {
-
         $Restaurant->food()->create($request->validated());
         return back()->with('success','successful');
     }
@@ -76,9 +75,10 @@ class FoodController extends Controller
      * @param  \App\Models\Food  $food
     //  * @return \Illuminate\Http\Response
      */
-    public function update(UpdateFoodRequest $request, Food $food)
+    public function update(UpdateFoodRequest $request,Restaurant $Restaurant , Food $food)
     {
             $food->update($request->validated());
+            return back();
     }
 
     /**
@@ -87,8 +87,12 @@ class FoodController extends Controller
      * @param  \App\Models\Food  $food
     //  * @return \Illuminate\Http\Response
      */
-    public function destroy(Food $food)
+    public function destroy(Restaurant $Restaurant , Food $Food)
     {
-        $food->delete();
+        // dd($Food);
+        $Food->delete();
+        return back();
+
+
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminDiscount;
 use App\Http\Controllers\FoodChangeFoodPartyController;
 use App\Http\Controllers\FoodController;
+use App\Http\Controllers\FoodImageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RestaurantsController;
 use App\Http\Controllers\Seller\Food\FoodChangeFoodPartyController as FoodFoodChangeFoodPartyController;
@@ -126,11 +127,14 @@ Route::middleware('auth')->group(function (){
                 // Route::resource('Restaurant/{Restaurant}/food/',FoodController::class)
                     // ->whereNumber(['Restaurant',])
                 // ;
-                Route::post('/Restaurant/{Restaurant}/{Food}/foodparty',FoodFoodChangeFoodPartyController::class)
+                Route::post('/Restaurant/{Restaurant}/food/{Food}/foodparty',FoodFoodChangeFoodPartyController::class)
                     ->whereNumber('Restaurant')->name('party')
                 ;
-                Route::post('/Restaurant/{Restaurant}/{Food}/image',FoodFoodChangeFoodPartyController::class)
-                    ->whereNumber('Restaurant')->name('party')
+                Route::post('/Restaurant/{Restaurant}/food/{Food}/image',[FoodImageController::class,'store'])
+                    ->whereNumber('Restaurant','Food')->name('image.store')
+                ;
+                Route::delete('/Restaurant/{Restaurant}/food/{Food}/image/{Images}',[FoodImageController::class,'destroy'])
+                    ->whereNumber('Restaurant','Food','Images')->name('image.destroy')
                 ;
 
             });

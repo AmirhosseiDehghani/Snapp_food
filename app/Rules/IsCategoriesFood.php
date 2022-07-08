@@ -15,8 +15,10 @@ class IsCategoriesFood implements Rule
      */
     public function __construct( )
     {
+
         $this->category=Category::whereFood()->pluck('id')->toArray();
         // dd($this->category->toArray());
+
     }
 
     /**
@@ -28,7 +30,10 @@ class IsCategoriesFood implements Rule
      */
     public function passes($attribute, $value)
     {
-        dd($attribute, $value,$this->category, in_array($value,$this->category));
+
+        // dd('hello');
+
+        // dd($attribute, $value,$this->category, in_array($value,$this->category));
         return in_array($value,$this->category);
     }
 
