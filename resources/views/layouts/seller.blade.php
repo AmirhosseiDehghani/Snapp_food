@@ -21,9 +21,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.css' rel='stylesheet' />
    @stack('link')
+   
 <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.js'></script>
 
-    
+
 </head>
 <body>
 
@@ -39,7 +40,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-               
+
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li class="nav-item">
                         <a href="/" class="nav-link align-middle px-0">
@@ -68,9 +69,9 @@
                             </li>
                         </ul>
                     </li>
-                    
-                   
-                    
+
+
+
                     <li>
                         <a href="" class="nav-link px-0 align-middle">
                             <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Sales Report</span> </a>
@@ -108,7 +109,7 @@
             <div>
                 @yield('content')
             </div>
-            
+
         </div>
     </div>
 </div>
@@ -120,6 +121,6 @@
 </main> --}}
 
 
-     @stack('script') 
+     @stack('script')
 </body>
 </html>

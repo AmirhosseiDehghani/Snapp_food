@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('name');
             // $table->foreignIdFor(Category::class)->nullable()->constrained();
             $table->string('phone');
-            // $table->string('address');
+            $table->boolean('is_Active')->default(true);
             $table->string('account');
             // $table->boolean('have_images')->default(false);
             // $table->foreignIdFor(User::class)->constrained();

@@ -16,7 +16,7 @@ class RestaurantsController extends Controller
 {
     public function __construct()
     {
-       // TODO: باگ نمیتونم وارد صفحه نمایش بشم توسط پالسی 
+       // TODO: باگ نمیتونم وارد صفحه نمایش بشم توسط پالسی
 
         $this->authorizeResource(Restaurant::class , 'Restaurant');
     }
@@ -27,7 +27,7 @@ class RestaurantsController extends Controller
      */
     public function index()
     {
-        
+
         $user=auth()->user();
         // $Restaurants= Restaurant::query()->whereMorphRelation((new Restaurant)-> users(),User::class,'user_id')->get();
         $Restaurants=$user->restaurants()->paginate(10);
@@ -68,11 +68,11 @@ class RestaurantsController extends Controller
     {
        $image_path= Storage::put('images', $request->validated()['image']);
 
-       
+
         // dd($request->all(),$test);
         $user=User::find(auth()->id());
         $Category=Category::find($request->validated()['category']);
-        
+
         $Restaurant=Restaurant::create($request->validated());
 
         $Restaurant->address()->create($request->validated());
@@ -80,7 +80,7 @@ class RestaurantsController extends Controller
 
         $Restaurant->categories()->save($Category);
         $Restaurant->users()->save($user);
-        
+
         return to_route('Seller.Restaurant.index');
     }
 
@@ -92,19 +92,10 @@ class RestaurantsController extends Controller
      */
     public function show(Restaurant $Restaurant)
     {
-        // $id=11;
-        // $this->authorize('update')
-        // $Restaurant=$Restaurant->find($id);
-        // $Address=$Restaurant->address;
-        // dd($Restaurant);
-        $Categories=$Restaurant->Categories;
 
-        // TODO Add&Edit&Delete food See&Change status order   
+        $Categories=Category::whereFood()->get();
         $Food=$Restaurant->food;
-
-        // dd($Food);
-        // Restaurant_show_id
-        return view('Restaurant.restaurantShow',compact('Restaurant','Food'));
+        return view('Restaurant.restaurantShow',compact('Restaurant','Food','Categories'));
     }
 
     /**
@@ -119,7 +110,7 @@ class RestaurantsController extends Controller
         $Address=$Restaurant->address;
         $Week=['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday',];
         $Times=$Restaurant->Dates;
-    
+
         // dd($Restaurant,$Address);
         return view('Restaurant.restaurantEdit',compact('Restaurant','Address','Week','Times'));
 
@@ -146,6 +137,6 @@ class RestaurantsController extends Controller
      */
     public function destroy(Restaurant $Restaurant)
     {
-        
+
     }
 }

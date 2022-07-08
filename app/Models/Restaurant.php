@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Restaurant extends Model
 {
     use HasFactory;
-    
+
     protected $fillable=
     [
         'name',
@@ -16,6 +17,7 @@ class Restaurant extends Model
         'phone',
         // 'address',
         'account',
+        'is_Active',
         // 'have_images',
     ];
     // protected $guarded=[
@@ -39,7 +41,7 @@ class Restaurant extends Model
     {
         return $this->morphToMany(User::class, 'userable');
     }
-    
+
     public function dates()
     {
         return $this->hasMany(Date::class);
@@ -56,12 +58,22 @@ class Restaurant extends Model
     {
         return $this->hasMany(Food::class);
     }
-    
-    
-    
 
-    
+    //-------------------Mutators
+//     protected function make_of(): Attribute
+// {
+//     return Attribute::make(
+//         get: function ($value, $attributes) {
 
-    
+//             return (is_null($value))? '-' :$value;
+//         }
+//     );
+// }
+
+
+
+
+
+
 
 }

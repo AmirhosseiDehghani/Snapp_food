@@ -10,7 +10,7 @@
             </x-slot>
            Restaurant:{{$Restaurant->name}}
         </x-navbar-show-restaurant-component>
-    </div> 
+    </div>
 
     <div class="col-12">
         <div class="row">
@@ -25,7 +25,7 @@
                             @csrf
                             <div class="row">
                                 <div class="col mb-3 ">
-                                 
+
                                     <label for="basic-name" class="form-label">Name</label>
                                     <div class="input-group mb-3">
                                         <input type="text" name="name" class="form-control" id="basic-name" aria-describedby="basic-addon3">
@@ -43,6 +43,31 @@
                                     @error('price')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
+                                    </div>
+                                </div>
+                                <div class="col-4 mb-3">
+                                    <label for="exampleInputMake_of" class="form-label">Make of</label>
+                                    <input name="make_of" type="text" class="form-control" id="exampleInputMake_of" aria-describedby="Make_of">
+                                    <div id="Make_of" class="form-text">
+                                    @error('make_of')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                    </div>
+                                </div>
+                                <div class="col mb-3 ">
+                                    <label for="select" class="form-label fw-bolder">Category</label>
+                                    <select name="category" id="select" class="form-select form-select-md mb-3" aria-label=".form-select-lg example">
+                                        <option selected>Chose one category</option>
+                                        @foreach ($Categories as $item)
+                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <div id="emailHelp" class="form-text">
+                                        @error('category')
+                                        <div class="alert alert-danger" role="alert">
+                                            {{$message}}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col mb-3 mt-3" >
@@ -73,6 +98,7 @@
                                 <th scope="col">make of</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">Food Party</th>
+                                <th scope="col">Function</th>
                               </tr>
                             </thead>
                             @php
@@ -84,89 +110,85 @@
                                     <th scope="row"></th>
                                     <td>{{$item->name}}</td>
                                   <td>{{$item->price}}</td>
-                                  <td>{{$item->make_of}}</td>
+                                  <td>{{$item->make_of??'-'}}</td>
                                   <td>
                                     @foreach ($item->categories as $category)
                                         {{$category->name.' '}}
-                                    @endforeach 
+                                    @endforeach
+                                  </td>
+                                  <td>
+                                    <form action="{{route('Seller.Restaurant.food.party',['Restaurant'=>$Restaurant,"Food"=>$item->id])}}" method="post">
+                                        @csrf
+                                    <button type="submit" class="btn btn-warning">
+                                        @if ($item->is_foodparty)
+                                        remove
+                                        @else
+                                        add
+                                        @endif
+                                    </button>
+                                    </form>
                                   </td>
                                   <td>
                                       <!-- Button trigger modal -->
                                       <div class="btn-group " role="group" aria-label="Basic example">
                                        <form action="{{route('Seller.Restaurant.food.destroy',['Restaurant'=>$Restaurant->id,'Food'=>$item->id] )}}" method="POST">
-                                        @csrf
-                                        @method('delete')
-                                           <button type="button" class="btn btn-danger">delete</button>
+                                            @csrf
+                                            @method('delete')
+                                            <button type="button" class="btn btn-danger">Delete</button>
                                         </form>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{$count}}">
-                                            edit
-                                        </button>
-                                       
+                                        <form action="{{route('Seller.Restaurant.food.edit',['Restaurant'=>$Restaurant->id,'Food'=>$item->id])}}" method="GET">
+                                            @csrf
+                                            <button class="btn btn-info" type="submit">Edit</button>
+                                        </form>
+
                                       </div>
-                                        
-                                        <form action="{{route('Seller.Restaurant.food.update',['Restaurant'=>$Restaurant->id,'Food'=>$item->id])}}" method="post">
-                                        <!-- Modal -->
-                                        @csrf
-                                        @method('put')
-                                        <div class="modal fade" id="staticBackdrop_{{$count}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                               <div class="d-flex flex-row">
-                                                <div>
-                                                    <x-input-component>
-                                                        <x-slot:label>Name</x-slot:label>
-                                                        <x-slot:name>name</x-slot:name>
-                                                        <x-slot:value>{{$item->name}}</x-slot:value>
-                                                    </x-input-component>
-                                                </div>
-                                                <div>
-                                                    <x-input-component>
-                                                        <x-slot:label>Price</x-slot:label>
-                                                        <x-slot:name>price</x-slot:name>
-                                                        <x-slot:value>{{$item->price}}</x-slot:value>
-                                                    </x-input-component>
-                                                </div>
-                                                <div>
-                                                    <x-input-component>
-                                                        <x-slot:label>Make of</x-slot:label>
-                                                        <x-slot:name>make_of</x-slot:name>
-                                                        <x-slot:value>{{$item->make_of}}</x-slot:value>
-                                                    </x-input-component>
-                                                </div>
-                                               
-                                               </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Understood</button>
-                                            </div>
-                                            </div>
-                                        </div>
-                                        </div>                                         
-                                    </form>
                                   </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                           </table>
-                        
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    
+
 
     <div class="col-12">
         <div class="col">
-            see ordes and change    
+            see ordes and change
         </div>
     </div>
-</div>    
+</div>
 @endsection
+
+{{--
+<div class="d-flex flex-row">
+    <div>
+        <x-input-component>
+            <x-slot:label>Name</x-slot:label>
+            <x-slot:name>name</x-slot:name>
+            <x-slot:value>{{$item->name}}</x-slot:value>
+        </x-input-component>
+    </div>
+    <div>
+        <x-input-component>
+            <x-slot:label>Price</x-slot:label>
+            <x-slot:name>price</x-slot:name>
+            <x-slot:value>{{$item->price}}</x-slot:value>
+        </x-input-component>
+    </div>
+
+    <div>
+        <x-input-component>
+            <x-slot:label>Make of</x-slot:label>
+            <x-slot:name>make_of</x-slot:name>
+            <x-slot:value>{{$item->make_of}}</x-slot:value>
+        </x-input-component>
+    </div>
+</div>
+
+
+--}}

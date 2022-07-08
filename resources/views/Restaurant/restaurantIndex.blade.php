@@ -1,8 +1,8 @@
 @extends('layouts.seller')
 
 @section('content')
-    
- 
+
+
 <div class="row ">
 
     <div class="col-12">
@@ -19,7 +19,8 @@
                     <th scope="col">name</th>
                     <th scope="col">phone</th>
                     <th scope="col">account</th>
-                    <th scope="col">Funcrion</th>                   
+                    <th scope="col">Function</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -37,22 +38,33 @@
                               <form action="{{route('Seller.Restaurant.edit',$Restaurant)}}" method="GET" >
                                  @csrf
                                 <button type="submit" class="btn btn-info">edit</button>
-                                </form> 
+                                </form>
                               <form action="{{route('Seller.Restaurant.destroy',$Restaurant)}}" method="POST">
                                  @csrf
                                  @method('delete')
                                 <button type="submit" class="btn btn-danger">delete</button>
-                                </form> 
+                                </form>
                               <form action="{{route('Seller.Restaurant.show',$Restaurant)}}" method="GET">
                                  @csrf
                                 <button type="submit" class="btn btn-primary">see</button>
-                                </form> 
+                                </form>
+                                <form action="{{route('Seller.Restaurant.Active',$Restaurant)}}" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn btn-warning">
+                                        @if ($Restaurant->is_Active)
+                                            Inactive
+                                        @else
+                                            Active
+                                        @endif
+                                    </button>
+                                </form>
                             </div>
                         </td>
-                       
+
+
 
                     </tr>
-                    
+
                         </div>
                         </div>
                     </div>
@@ -62,21 +74,21 @@
 
 
 
-                        
+
                     @php $count++; @endphp
-                    
-                        
-                     
+
+
+
                     @endforeach
             </table>
             {{ $Restaurants->links() }}
-           
+
 
         </div>
 
     </div>
 </div>
-   
+
 
 
 @endsection

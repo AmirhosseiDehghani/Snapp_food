@@ -32,7 +32,7 @@ class Food extends Model
     {
         return $this->belongsTo(Restaurant::class);
     }
-    
+
 
 
 }

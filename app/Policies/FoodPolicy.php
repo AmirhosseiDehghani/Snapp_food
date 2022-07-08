@@ -28,9 +28,9 @@ class FoodPolicy
      * @param  \App\Models\Food  $food
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Food $food)
+    public function view(User $user, Food $Food)
     {
-        //
+       return $user->hasPermissionTo('see food');
     }
 
     /**
@@ -41,7 +41,7 @@ class FoodPolicy
      */
     public function create(User $user)
     {
-        //
+       return $user->hasPermissionTo('add food');
     }
 
     /**
@@ -51,9 +51,21 @@ class FoodPolicy
      * @param  \App\Models\Food  $food
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Food $food)
+    public function update(User $user, Food $Food)
     {
-        //
+        if(!$user->hasPermissionTo('edits food')){
+            return false;
+        }
+        $food=$user->Restaurants()->food;
+        foreach ($food as $key => $value) {
+            if($value->id==$Food->id){
+                return true;
+            }
+        }
+
+       return false;
+
+
     }
 
     /**
@@ -63,9 +75,20 @@ class FoodPolicy
      * @param  \App\Models\Food  $food
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Food $food)
+    public function delete(User $user, Food $Food)
     {
-        //
+        if(!$user->hasPermissionTo('delete food')){
+            return false;
+        }
+        $food=$user->Restaurants()->food;
+        foreach ($food as $key => $value) {
+            if($value->id==$Food->id){
+                return true;
+            }
+        }
+
+       return false;
+
     }
 
     /**

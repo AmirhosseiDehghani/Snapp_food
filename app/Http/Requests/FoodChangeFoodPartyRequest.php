@@ -2,12 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Category;
-use App\Rules\IsCategoriesFood;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Enum;
 
-class StoreFoodRequest extends FormRequest
+class FoodChangeFoodPartyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +13,7 @@ class StoreFoodRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->hasPermissionTo('edits food');
     }
 
     /**
@@ -26,12 +23,8 @@ class StoreFoodRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
-            "name" => "required",
-            "price" => "required|numeric",
-            "make_of" => "nullable|string",
-            "category" => ['required', new IsCategoriesFood()],
+            //
         ];
     }
 }

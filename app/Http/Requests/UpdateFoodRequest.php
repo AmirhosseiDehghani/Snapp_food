@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\IsCategoriesFood;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateFoodRequest extends FormRequest
@@ -13,7 +14,7 @@ class UpdateFoodRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,10 @@ class UpdateFoodRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "name" => "required",
+            "price" => "required|numeric",
+            "make_of" => "nullable|string",
+            "category" => ['required', new IsCategoriesFood()],
         ];
     }
 }

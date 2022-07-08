@@ -20,16 +20,16 @@ class MakePermissionAndRoleSeeder extends Seeder
     {
         //اگه خواستیش
         //admin
-        // تغیر بدی باید در 
+        // تغیر بدی باید در
         //auth service provider
         // تغیر بدی
         // $roleAdmin = Role::create(['name' => 'Super Admin']);
         $roleAdmin = Role::create(['name' => 'Admin']);
         $roleSeller = Role::create(['name' => 'Seller']);
         $roleBuyer = Role::create(['name' => 'Buyer']);
-        
+
         // $AdminPermissions=[
-            
+
         // ];
 
         $AllPermissions=[
@@ -42,6 +42,7 @@ class MakePermissionAndRoleSeeder extends Seeder
             'delete restaurant',
             'see restaurant',
 
+            'add food',
             'see food',
             'delete food',
             'edits food',
@@ -49,7 +50,7 @@ class MakePermissionAndRoleSeeder extends Seeder
             'edits status food',
             'order food',
 
-            'request for delete comment' 
+            'request for delete comment'
         ];
 
         $SellerPermissions=[
@@ -60,13 +61,14 @@ class MakePermissionAndRoleSeeder extends Seeder
             'edits restaurant',
             'see restaurant',
 
+            'add food',
             'see food',
             'delete food',
             'edits food',
             'see status food',
             'edits status food',
 
-            'request for delete comment' 
+            'request for delete comment'
         ];
 
         $BuyerPermissions=[
@@ -75,9 +77,9 @@ class MakePermissionAndRoleSeeder extends Seeder
             'see status food',
             'order food',
 
-            
+
             'see restaurant',
-            
+
 
 
         ];
@@ -85,12 +87,12 @@ class MakePermissionAndRoleSeeder extends Seeder
         foreach($AllPermissions as $permission){
             Permission::create(['name' => $permission]);
         }
-       
-        
+
+
         foreach($SellerPermissions as $permission){
             $roleSeller->givePermissionTo($permission);
         }
-        
+
         foreach($BuyerPermissions as $permission){
             $roleBuyer->givePermissionTo($permission);
         }
