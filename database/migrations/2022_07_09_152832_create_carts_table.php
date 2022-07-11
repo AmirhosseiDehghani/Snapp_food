@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Food;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,11 +15,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('discounts', function (Blueprint $table) {
+        Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            // $table->enum('type',['percent','price']);
-            $table->integer('discount');
+            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(Food::class);
+            $table->string('quantity');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('discounts');
+        Schema::dropIfExists('carts');
     }
 };

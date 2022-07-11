@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,7 +15,18 @@ class Food extends Model
         'is_foodparty',
         'make_of',
     ];
+    protected $appends=[
+        'finalPrice'
+    ];
+    //-------------
+    public function getFinalPriceAttribute(){
+        if($this->attributes['discounts_id']==null){
+            return $this->attributes['price'];
+        }
+        // return (1-$this->discount()->first()->discount)*$this->attributes['price'];
+        return (1-Discounts::find($this->attributes['discounts_id'])->discount)*$this->attributes['price'];
 
+    }
     //-------------- Relationships----------------//
     public function categories()
     {
@@ -28,11 +40,14 @@ class Food extends Model
     {
         return $this->belongsTo(Discounts::class);
     }
-    public function Restaurant()
+    public function restaurant()
     {
         return $this->belongsTo(Restaurant::class);
     }
-
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
 
 
 }

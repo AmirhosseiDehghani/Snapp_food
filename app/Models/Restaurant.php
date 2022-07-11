@@ -20,23 +20,22 @@ class Restaurant extends Model
         'is_Active',
         // 'have_images',
     ];
-    // protected $guarded=[
-    //     'id'
-    // ];
+    protected $appends=[
+        // 'oneImage'
+    ];
     protected $hidden=
     [
-        'have_image'
+        'created_at',
+        'updated_at',
     ];
+
 
     //---------------- Relationship-------------------//
     public function categories()
     {
         return $this->morphToMany(Category::class, 'categorizable');
     }
-    // public function seller()
-    // {
-    //     return $this->belongsTo(Seller::class,'user_id','id');
-    // }
+
     public function users()
     {
         return $this->morphToMany(User::class, 'userable');
@@ -69,6 +68,10 @@ class Restaurant extends Model
 //         }
 //     );
 // }
+    // public function getOneImageAttribute(){
+
+
+    // }
 
 
 

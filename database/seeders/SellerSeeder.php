@@ -50,28 +50,19 @@ class SellerSeeder extends Seeder
     )->create();
 
     $a= Restaurant::all()->load('categories');
-    // dd($a);
-    // return $a;
+
     foreach($a as $per){
         $per->categories()->update(['type'=>'restaurant']);
     }
 
     $food= Food::all()->load('categories');
-    // dd($food);
-    // return $food;
+
     foreach($food as $per){
         $per->categories()->update(['type'=>'food']);
     }
-    
-    // User::factory(10)->create()
-    //   ->each(function($user)
-    //   {
-    //     Restaurant::factory(rand(1,2))->create()
-    //       ->each(function())
-    //     ;
-    //   })
-    // ;
-    
+
+
+
     $users=User::all();
     foreach($users as $user)
     {

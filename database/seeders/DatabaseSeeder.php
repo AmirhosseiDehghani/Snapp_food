@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         //     'email'=>'admin@admin.com',
         //     'password'=>Hash::make(123)
         // ]);
-        
+
         $admin=User::query()->create([
                 'name'=>'admin',
                 'email'=>'admin@admin.com',
@@ -35,17 +35,17 @@ class DatabaseSeeder extends Seeder
             ]);
         // $admin->assignRole('Admin');
         $admin->assignRole('Admin');
-        
-        
+
+
 
         $this->call([
-            
+
             // MakePermissionAndRoleSeeder::class,
             // CategorySeeder::class,
-            // DiscountsSeeder::class,
+            DiscountsSeeder::class,
             SellerSeeder::class,
             // RestaurantSeeder::class,
-            
+
         ]);
 
 
@@ -56,6 +56,6 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-       
+
     }
 }

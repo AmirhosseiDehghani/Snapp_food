@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ApiRestaurantController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Buyer\BuyerAddressController;
 use App\Http\Controllers\Api\Buyer\BuyerController;
+use App\Http\Controllers\CartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,15 +27,28 @@ Route::get('restaurants/{id}',[ApiRestaurantController::class,'show'])->whereNum
 Route::get('restaurants/{id}/food',[ApiRestaurantController::class,'restaurantFood'])->whereNumber('id');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    
+    Route::post('/logout', [AuthController::class, 'logout']);
+
     Route::apiResource('/addresses',BuyerAddressController::class);
     Route::post('/addresses/{id}',[BuyerAddressController::class,'setAddress'])->whereNumber('id');
 
     Route::patch('/Buyer',[BuyerController::class,'update']);
+    //-----------------cart
+    Route::prefix('Buyer')->group(function(){
+        Route::get('/cart',[CartController::class,'getCart']);
+        Route::get('/cart/info',[CartController::class,'getCartInfo']);
+        Route::delete('/cart',[CartController::class,'deleteCart']);
+        Route::post('/cart',[CartController::class,'setCart']);
+
+        Route::patch('/cart/add-food/{id}',[CartController::class,'addItemCart'])->whereNumber('id');
+        Route::patch('/cart/sub-food/{id}',[CartController::class,'subItemCart'])->whereNumber('id');
+        Route::delete('/cart/delete-food/{id}',[CartController::class,'deleteItemCart'])->whereNumber('id');
+
+        Route::post('/cart/pay',[CartController::class,'payForCart']);
+    });
 
 
 
-    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 
