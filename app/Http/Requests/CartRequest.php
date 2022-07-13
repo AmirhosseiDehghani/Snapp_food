@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\OnlyOneRestaurantRule;
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class CartRequest extends FormRequest
@@ -25,7 +25,7 @@ class CartRequest extends FormRequest
     public function rules()
     {
         return [
-            'food_id'=>['required','bail','exists:food,id',new OnlyOneRestaurantRule()],
+            'food_id'=>['required','bail','exists:food,id',],
             'quantity'=>'required|numeric',
         ];
     }
