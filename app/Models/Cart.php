@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
-    // use HasFactory;
+    use HasFactory;
     protected $fillable=[
         'food_id',
         'cart_id',
@@ -17,12 +18,17 @@ class Cart extends Model
         'created_at',
         'updated_at',
     ];
-    protected $attributes;
-    public function getRestaurantIdAttribute()
+
+    protected function foodId(): Attribute
     {
-        return $this->food->restaurant->id;
+        return new Attribute(
+            set: fn ($value) => [
+                'food_id' => $value,
+                'cart_id' =>Food::find($value)->restaurant->id,
+            ],
+        );
     }
-    
+
 
     public function user()
     {
@@ -32,9 +38,9 @@ class Cart extends Model
     {
         return $this->belongsTo(Food::class);
     }
-    // public function restaurant
-    // {
-    //     return $this->food()->restaurant;
-    // }
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class,'cart_id');
+    }
 
 }

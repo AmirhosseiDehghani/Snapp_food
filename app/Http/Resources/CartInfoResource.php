@@ -20,7 +20,7 @@ class CartInfoResource extends JsonResource
         return [
             'title'=> $this->name,
             'address'=> $this->address->address,
-            "cart"=>$this->food->first()->cart->first()->id,
+            "cart"=>$this->id,
             'food'=>$this->transform($this->food,function($value)use(&$sum) {
                 // return $value;
                 $sum=0;

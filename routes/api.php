@@ -37,7 +37,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::prefix('Buyer')->group(function(){
         Route::get('/cart',[CartController::class,'getCart']);
         Route::get('/cart/info',[CartController::class,'getCartInfo']);
-        Route::delete('/cart',[CartController::class,'deleteCart']);
+        Route::get('/cart/info/{id}',[CartController::class,'getCartId'])->whereNumber('id');
+        Route::delete('/cart/{id}',[CartController::class,'deleteCart'])->whereNumber('id');
         Route::post('/cart',[CartController::class,'setCart']);
 
         Route::patch('/cart/add-food/{id}',[CartController::class,'addItemCart'])->whereNumber('id');

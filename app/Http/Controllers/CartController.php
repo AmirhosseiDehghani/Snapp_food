@@ -18,6 +18,7 @@ class CartController extends Controller
         $Cart->getCart();
         return $Cart->output;
     }
+
     public function setCart(CartRequest $request)
     {
         // dd($request->validated());
@@ -48,10 +49,10 @@ class CartController extends Controller
         return $Cart->output;
 
     }
-    public function deleteCart()
+    public function deleteCart($id)
     {
         $Cart=new CartHandler;
-        $Cart->deleteCart();
+        $Cart->deleteCart($id);
         return $Cart->output;
     }
     public function getCartInfo()
@@ -59,6 +60,12 @@ class CartController extends Controller
         $Cart=new CartHandler;
         $Cart->getCartInfo();
         return $Cart->output;
+    }
+    public function getCartId($id)
+    {
+        $Cart= new CartHandler;
+        $Cart->getCartId($id);
+        return$Cart->output;
     }
     public function payForCart()
     {

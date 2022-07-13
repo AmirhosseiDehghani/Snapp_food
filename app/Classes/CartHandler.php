@@ -7,33 +7,44 @@ use App\Http\Resources\CartResource;
 use App\Models\Cart;
 use App\Models\Restaurant;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\PseudoTypes\CallableString;
 
+use function PHPUnit\Framework\never;
+
 class CartHandler{
-    public  $cart;
-    public  $output=[];
+    public readonly \Illuminate\Database\Eloquent\Relations\HasMany $cart;
+    public   $output=[];
     function __construct()
     {
         $this->cart=auth()->user()->cart();
     }
-    public function isCartEmpty()
+    public function isCartsEmpty()
     {
-        return empty($this->cart->get());
+        return count($this->cart->get())==0;
+    }
+    public function isCartExist($id)
+    {
+        return (count($this->thisCart($id))!=0);
+    }
+    public function isThisFoodExist($id)
+    {
+        return count($this->cart->with('food')->where('food_id', $id)->get())!=0;
     }
     public function getCart()
     {
         $cart=$this->cart->get();
-        if($this->isCartEmpty())
+        if($this->isCartsEmpty())
         {
             $this->output= [
                 'user'=>auth()->id(),
-                'massage'=>'your cart is empty'
+                'massage'=>'your carts is empty'
             ];
             return false;
         }
         $this->output= [
             'user'=>auth()->id(),
-            'cart'=>$cart
+            'cart'=>$cart->groupBy('cart_id')
         ];
         return true;
     }
@@ -58,19 +69,26 @@ class CartHandler{
     {
         return $this->cart->with('food')->where('food_id', $id)->first();;
     }
+    public function thisCart($id)
+    {
+        return $this->cart->where('cart_id',$id)->get();
+    }
+
     public function setCart(array $data)
     {
-        if(!$this->cart->get() or !$this->thisFood($data['food_id'])){
-            $cart=$this->create($data['food_id'],$data['quantity']);
+        if($this->isCartsEmpty() or !$this->isThisFoodExist($data['food_id'])){
+            $this->create($data['food_id'],$data['quantity']);
         }else{
-            $cart=$this->update($data['food_id'],$data['quantity'],true);
+            $this->output=[
+                'user_id'=>auth()->id(),
+                'massage'=>'you have such food',
+            ];
+            // $this->update($data['food_id'],$data['quantity'],true);
         }
         $this->output=[
             'user_id'=>auth()->id(),
             'massage'=>'the food add',
-            // 'Cart'=>CartResource::collection( $this->thisFood($data['food_id']))
         ];
-        // return $cart;
     }
     public function addItemCard(int $id)
     {
@@ -88,13 +106,13 @@ class CartHandler{
     public function subItemCart(int $id) : bool
     {
         // $item=$this->thisFood($id);
-        if(!$this->cart->get()){
+        if($this->isCartsEmpty()){
             $this->output=[
                 'user_id'=>auth()->id(),
                 'massage'=>'your cart is empty'
             ];
             return false;
-        }elseif(!$this->thisFood($id)){
+        }elseif(!$this->isThisFoodExist($id)){
             $this->output=[
                 'user_id'=>auth()->id(),
                 'massage'=>'you Do not have such food'
@@ -104,7 +122,7 @@ class CartHandler{
             $this->thisFood($id)->delete();
             $this->output=[
                 'user_id'=>auth()->id(),
-                'massage'=>'your item is delete'
+                'massage'=>'your food is delete'
             ];
             return false;
         }else{
@@ -137,12 +155,14 @@ class CartHandler{
     }
     public function deleteCart($id)
     {
+
         $this->cart->where('cart_id',$id)->delete();
         $this->output= [
             'user'=>auth()->id(),
             'massage'=>'your cart is empty'
         ];
     }
+
     protected function CartInfo()
     {
         $cartIds=$this->cart->pluck("food_id");
@@ -165,9 +185,21 @@ class CartHandler{
             }
         )->get();
     }
+    protected function CardIdInfo($id)
+    {
+        $cartIds=$this->cart->where('cart_id',$id)->pluck("food_id");
+
+        return Restaurant::with([
+            // 'carts'=>fn($query0)=>$query0->where([['cart_id',$id],['user_id',auth()->id()]]),
+            'address',
+            'food'=>fn($query)=>$query->with([
+                'cart'=>fn($query0)=>$query0->where([['cart_id',$id],['user_id',auth()->id()]]),
+            ])->whereIn('id',$cartIds)
+        ])->find($id);
+    }
     public function getCartInfo()
     {
-        if($this->isCartEmpty())
+        if($this->isCartsEmpty())
         {
             $this->output= [
                 'user'=>auth()->id(),
@@ -177,22 +209,49 @@ class CartHandler{
         }
 
 
-        // $this->output= [
-        //     'user'=>auth()->id(),
-        //     'Restaurant'=>new CartInfoResource($this->CartInfo())
-        // ];
-        $this->output=CartInfoResource::collection($this->CartInfo());
+        $this->output= [
+            'user'=>auth()->id(),
+            'Restaurant'=>CartInfoResource::collection($this->CartInfo())
+        ];
+        // $this->output=CartInfoResource::collection($this->CartInfo());
 
         return true;
     }
-    public function payForCart()
+    public function getCartId($id)
     {
-        // $this->getCartInfo();
-        // // dd($this->output);
-        // $cart= json_decode(json_encode($this->output),true)  ;
-        // $price= $cart['Restaurant']['total_price'];
-        // $TotalPrice=
+        if($this->isCartExist($id))
+        {
+            $this->output= [
+                'user'=>auth()->id(),
+                'Restaurant'=>new CartInfoResource($this->CardIdInfo($id))
+            ];
+             return true;
+        }else
+        {
+            $this->output= [
+                'user'=>auth()->id(),
+                'massage'=>'your cart is empty'
+            ];
+            return false;
 
-        return $this->CartInfo();
+        }
+
+
+        // $this->output=new CartInfoResource($this->CardIdInfo($id));
+    }
+    public function payForCart($id)
+    {
+        $test=$this->getCartId($id);
+        if($test){
+
+            DB::transaction(function(){
+
+                
+            });
+            return true;
+        }
+
+
+        return false;
     }
 }
