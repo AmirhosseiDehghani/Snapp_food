@@ -29,11 +29,11 @@ class ApiRestaurantController extends Controller
             $query->whereRelation('Restaurant','id','=',$id);
         })->get();
         // $Category=Category::food()->get();
-        
 
 
+
+        return $Category;
         // response()->json($Category);
-        // return $a;
         // return
     }
 }

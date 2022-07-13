@@ -23,8 +23,8 @@ class Food extends Model
         if($this->attributes['discounts_id']==null){
             return $this->attributes['price'];
         }
-        // return (1-$this->discount()->first()->discount)*$this->attributes['price'];
-        return (1-Discounts::find($this->attributes['discounts_id'])->discount)*$this->attributes['price'];
+        return (1-$this->discount->discount)*$this->attributes['price'];
+        // return (1-Discounts::find($this->attributes['discounts_id'])->discount)*$this->attributes['price'];
 
     }
     //-------------- Relationships----------------//
@@ -38,7 +38,7 @@ class Food extends Model
     }
     public function discount()
     {
-        return $this->belongsTo(Discounts::class);
+        return $this->belongsTo(Discounts::class,'discounts_id');
     }
     public function restaurant()
     {

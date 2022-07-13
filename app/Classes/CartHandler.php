@@ -11,7 +11,7 @@ use phpDocumentor\Reflection\PseudoTypes\CallableString;
 
 class CartHandler{
     public  $cart;
-    public array $output=[];
+    public  $output=[];
     function __construct()
     {
         $this->cart=auth()->user()->cart();
@@ -46,16 +46,17 @@ class CartHandler{
 
         return $this->thisFood($id)->update(['quantity'=>$quantity]);
     }
-    public function create(int $id,int $quantity)
+    public function create(int $id,int $quantity,$cart_id=1)
     {
       return  $this->cart->create([
             'food_id'=>$id,
-            'quantity'=>$quantity
+            'quantity'=>$quantity,
+            'cart_id'=>$cart_id
         ]);
     }
     public function thisFood($id)
     {
-        return $this->cart->where('food_id', $id)->first();;
+        return $this->cart->with('food')->where('food_id', $id)->first();;
     }
     public function setCart(array $data)
     {
@@ -134,9 +135,9 @@ class CartHandler{
             ];
         }
     }
-    public function deleteCart()
+    public function deleteCart($id)
     {
-        $this->cart->delete();
+        $this->cart->where('cart_id',$id)->delete();
         $this->output= [
             'user'=>auth()->id(),
             'massage'=>'your cart is empty'
@@ -175,21 +176,23 @@ class CartHandler{
             return false;
         }
 
-        $this->output= [
-            'user'=>auth()->id(),
-            'Restaurant'=>new CartInfoResource($this->CartInfo())
-        ];
+
+        // $this->output= [
+        //     'user'=>auth()->id(),
+        //     'Restaurant'=>new CartInfoResource($this->CartInfo())
+        // ];
+        $this->output=CartInfoResource::collection($this->CartInfo());
 
         return true;
     }
     public function payForCart()
     {
-        $this->getCartInfo();
-        // dd($this->output);
-        $cart= json_decode(json_encode($this->output),true)  ;
-        $price= $cart['Restaurant']['total_price'];
+        // $this->getCartInfo();
+        // // dd($this->output);
+        // $cart= json_decode(json_encode($this->output),true)  ;
+        // $price= $cart['Restaurant']['total_price'];
         // $TotalPrice=
 
-        // return
+        return $this->CartInfo();
     }
 }

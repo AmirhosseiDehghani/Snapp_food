@@ -6,7 +6,7 @@ use App\Classes\CartHandler;
 use App\Http\Requests\CartRequest;
 use App\Http\Resources\CartInfoCollection;
 use App\Http\Resources\CartResource;
-use App\Rules\OnlyOneRestaurantRule;
+;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\FuncCall;
 
@@ -30,10 +30,7 @@ class CartController extends Controller
 
     public function addItemCart(Request $request,$id)
     {
-        $request->request->add(['food_id'=>$id]);
-        $request->validate([
-            'food_id'=>new OnlyOneRestaurantRule
-        ]);
+
         $Cart=new CartHandler;
         $Cart->addItemCard($id);
         return $Cart->output;
@@ -60,7 +57,6 @@ class CartController extends Controller
     public function getCartInfo()
     {
         $Cart=new CartHandler;
-        // return $Cart->getCartInfo();
         $Cart->getCartInfo();
         return $Cart->output;
     }
@@ -68,7 +64,7 @@ class CartController extends Controller
     {
         $Cart=new CartHandler;
         return $Cart->payForCart();
-        
+
     }
 
 }

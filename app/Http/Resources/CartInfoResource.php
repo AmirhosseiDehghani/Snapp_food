@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class CartInfoResource extends JsonResource
 {
@@ -15,38 +16,30 @@ class CartInfoResource extends JsonResource
      */
     public function toArray($request)
     {
-
-         $sum=0 ;
-
+        $sum=0;
         return [
-
-
-                'title'=>$this->resource->first()->name,
-                'address'=>$this->resource->first()->address->address,
-
-                'Food'=>
-                [
-                $this->merge($this->transform($this->resource->first()->food,function($value)use(&$sum)
-                    {
-                        $array=[];
-                        foreach($value as $food){
-                        $arrayNew=[
-                            'food_name'=>  $food->name,
-                            'food_price'=>((int) $food->finalPrice) *  $food->cart[0]->quantity,
-                            'food_quantity'=>$food->cart[0]->quantity,
-                            ];
-                            $sum+=$arrayNew['food_price'] ;
-                            $array[]=$arrayNew;
-                        }
-                        return $array;
-                    }
-                )),
-
-            ],
+            'title'=> $this->name,
+            'address'=> $this->address->address,
+            "cart"=>$this->food->first()->cart->first()->id,
+            'food'=>$this->transform($this->food,function($value)use(&$sum) {
+                // return $value;
+                $sum=0;
+                $array=[];
+                foreach($value as $food){
+                $arrayNew=[
+                    'food_name'=>  $food->name,
+                    'food_price'=>$food->price,
+                    'price'=>((int) $food->finalPrice) *  $food->cart[0]->quantity,
+                    'food_quantity'=>$food->cart[0]->quantity,
+                    ];
+                    $sum+=$arrayNew['food_price'] ;
+                    $array[]=$arrayNew;
+                }
+                return $array;
+            }),
             'total_price'=>$sum
-            ]
 
+        ];
 
-        ;
     }
 }

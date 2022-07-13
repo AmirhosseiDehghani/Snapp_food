@@ -57,6 +57,10 @@ class Restaurant extends Model
     {
         return $this->hasMany(Food::class);
     }
+    public function carts()
+    {
+        return $this->hasMany(Cart::class,'cart_id');
+    }
 
     //-------------------Mutators
 //     protected function make_of(): Attribute
