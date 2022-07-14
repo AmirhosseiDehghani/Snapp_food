@@ -67,10 +67,11 @@ class CartController extends Controller
         $Cart->getCartId($id);
         return$Cart->output;
     }
-    public function payForCart()
+    public function payForCart($id)
     {
         $Cart=new CartHandler;
-        return $Cart->payForCart();
+        $Cart->payForCart($id);
+        return $Cart->output;
 
     }
 

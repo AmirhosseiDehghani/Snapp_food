@@ -20,9 +20,8 @@ class CartSeeder extends Seeder
         $food=Food::all()->pluck('id');
         foreach($Users as $user){
             for ($i=0; $i < 20; $i++) {
-
-                $user->query()->cart()->updateOrInsert([
-                    'food_id'=>    $food->random(),
+                $user->cart()->create([
+                    'food_id'=>   $food->random(),
                     'quantity'=>rand(1,5)
                 ]) ;
             }

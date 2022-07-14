@@ -1,10 +1,12 @@
 <?php
 namespace App\Classes;
 
+use App\Http\Resources\AddressResource;
 use App\Http\Resources\CartInfoCollection;
 use App\Http\Resources\CartInfoResource;
 use App\Http\Resources\CartResource;
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Restaurant;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -44,7 +46,8 @@ class CartHandler{
         }
         $this->output= [
             'user'=>auth()->id(),
-            'cart'=>$cart->groupBy('cart_id')
+            // ToDO: How sort and group
+            'cart'=>$cart->groupBy('cart_id')->sortBy('cart_id')
         ];
         return true;
     }
@@ -239,18 +242,41 @@ class CartHandler{
 
         // $this->output=new CartInfoResource($this->CardIdInfo($id));
     }
+
     public function payForCart($id)
     {
         $test=$this->getCartId($id);
         if($test){
 
-            DB::transaction(function(){
+            $rawData=json_decode(json_encode($this->output),true);
 
-                
+            $user=auth()->user();
+            $restaurant=$this->thisCart($id)->first()->restaurant;
+            $data=[
+                'buyer'=>[
+                    'name'=>$user->name,
+                    'address'=>new AddressResource($user->addresses()->where('default',1)->first())
+                ],
+                'order'=>$rawData['Restaurant']['food'],
+                'restaurant'=>[
+                    'name'=>$restaurant->name,
+                    'phone'=>$restaurant->phone,
+                    'account'=>$restaurant->account,
+                ]
+            ];
+            DB::transaction(function()use($id,$data){
+                Order::create(['data'=>$data ,'restaurant_id'=>$id]);
             });
+            $this->output= [
+                'user'=>auth()->id(),
+                'massage'=>'successfully'
+            ];
             return true;
         }
-
+        $this->output= [
+            'user'=>auth()->id(),
+            'massage'=>'fail try again'
+        ];
 
         return false;
     }

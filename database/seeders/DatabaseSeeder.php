@@ -44,7 +44,8 @@ class DatabaseSeeder extends Seeder
             // CategorySeeder::class,
             DiscountsSeeder::class,
             SellerSeeder::class,
-            CartSeeder::class,
+            // CartSeeder::class,
+            BuyerSeeder::class,
             // RestaurantSeeder::class,
 
         ]);

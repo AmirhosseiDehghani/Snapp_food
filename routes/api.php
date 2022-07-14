@@ -40,12 +40,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/cart/info/{id}',[CartController::class,'getCartId'])->whereNumber('id');
         Route::delete('/cart/{id}',[CartController::class,'deleteCart'])->whereNumber('id');
         Route::post('/cart',[CartController::class,'setCart']);
-
         Route::patch('/cart/add-food/{id}',[CartController::class,'addItemCart'])->whereNumber('id');
         Route::patch('/cart/sub-food/{id}',[CartController::class,'subItemCart'])->whereNumber('id');
         Route::delete('/cart/delete-food/{id}',[CartController::class,'deleteItemCart'])->whereNumber('id');
-
-        Route::post('/cart/pay',[CartController::class,'payForCart']);
+        Route::post('/cart/pay/{id}',[CartController::class,'payForCart'])->whereNumber('id');
     });
 
 
