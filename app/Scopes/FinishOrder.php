@@ -14,6 +14,6 @@ class FinishOrder implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('status', '!=', 3);
+        $builder->where('status', '!=', '3');
     }
 }

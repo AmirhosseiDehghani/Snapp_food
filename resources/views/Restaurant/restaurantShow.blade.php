@@ -157,8 +157,42 @@
 
 
     <div class="col-12">
+        <h1>Order</h1>
         <div class="col">
-            see ordes and change
+            @if ($Orders->empty())
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">User</th>
+                        <th scope="col">address</th>
+                        <th scope="col">status</th>
+                        <th scope="col">see</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($Orders as $item)
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>{{$item->data['buyer']['name']}}</td>
+                            <td>{{$item->data['buyer']['address']['address']}}</td>
+                            <td>{{$item->showStatus}}</td>
+                            <td>
+                                <form action="{{ route('Seller.Restaurant.order.show', ['Restaurant'=>$Restaurant,"order"=>$item])}}" method="get">
+                                    <button type="submit" class="btn btn-info">
+                                        see
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+
+                    </tbody>
+                </table>
+            @else
+                <h2>no order</h2>
+            @endif
+
         </div>
     </div>
 </div>

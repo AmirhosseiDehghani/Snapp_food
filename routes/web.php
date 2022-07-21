@@ -18,10 +18,14 @@ use App\Http\Controllers\Seller\SellerSiteController;
 use App\Http\Controllers\Seller\SellerUpdateController;
 use App\Models\Category;
 use App\Models\Food;
+use App\Models\Order;
 use App\Models\Restaurant;
 use Illuminate\Support\Facades\Route;
 use PHPUnit\TextUI\XmlConfiguration\Group;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Routing\RouteGroup;
+use App\Http\Controllers\OrderController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -123,7 +127,7 @@ Route::middleware('auth')->group(function (){
                 Route::get('Restaurant/{Restaurant}/food/{Food}/edit',[FoodController::class,'edit'])
                     ->whereNumber(['Restaurant','Food'])->name('edit')
                 ;
-                //IS there a way ?
+                //ToDo IS there a way ?
                 // Route::resource('Restaurant/{Restaurant}/food/',FoodController::class)
                     // ->whereNumber(['Restaurant',])
                 // ;
@@ -136,8 +140,11 @@ Route::middleware('auth')->group(function (){
                 Route::delete('/Restaurant/{Restaurant}/food/{Food}/image/{Images}',[FoodImageController::class,'destroy'])
                     ->whereNumber('Restaurant','Food','Images')->name('image.destroy')
                 ;
-
             });
+            //Order
+            Route::resource('Restaurant/{Restaurant}/order', OrderController::class)->only(['show','update']);
+
+
         });
     });
 

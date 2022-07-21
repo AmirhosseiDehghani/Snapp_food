@@ -16,6 +16,13 @@ class Order extends Model
         'restaurant_id',
         'status',
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+    protected $appends=[
+        // 'showStatus'
+    ];
      /**
      * The "booted" method of the model.
      *
@@ -33,20 +40,29 @@ class Order extends Model
             set: fn ($value) => json_encode($value),
         );
     }
-    protected function status(): Attribute
+    public function getShowStatusAttribute()
     {
-        return Attribute::make(
-            get: fn ($value) => match($value) {
-                '0'=>'Pending',
-                '1'=>"Preparing food",
-                '2'=>"courier delivery",
-                '3'=>'Reaching to the destination'
-            },
-        );
+        return  match((int)$this->status) {
+            0=>'Pending',
+            1=>"Preparing food",
+            2=>"courier delivery",
+            3=>'Reaching to the destination'
+        };
     }
+    public function getShowNextStatusAttribute()
+    {
+        return  match((int) fmod( (int) $this->status +1,4)) {
+            0=>'Pending',
+            1=>"Preparing food",
+            2=>"courier delivery",
+            3=>'Reaching to the destination'
+        };
+    }
+
     //----------relationship
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class);
     }
+
 }

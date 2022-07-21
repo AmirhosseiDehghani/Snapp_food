@@ -242,6 +242,25 @@ class CartHandler{
 
         // $this->output=new CartInfoResource($this->CardIdInfo($id));
     }
+    protected function hasAddress():bool
+    {
+        $address=auth()->user()->addresses();
+        if($address->get()->isEmpty()){
+            $this->output= [
+                'user'=>auth()->id(),
+                'massage'=>'please first add address'
+            ];
+            return false;
+        }
+        if($address->where('default',1)->get()->isEmpty()){
+            $this->output= [
+                'user'=>auth()->id(),
+                'massage'=>'please first chose a default address'
+            ];
+            return false;
+        }
+        return true;
+    }
 
     public function payForCart($id)
     {
@@ -249,6 +268,9 @@ class CartHandler{
         if($test){
 
             $rawData=json_decode(json_encode($this->output),true);
+            if(!$this->hasAddress()){
+                return false;
+            }
 
             $user=auth()->user();
             $restaurant=$this->thisCart($id)->first()->restaurant;
@@ -257,16 +279,19 @@ class CartHandler{
                     'name'=>$user->name,
                     'address'=>new AddressResource($user->addresses()->where('default',1)->first())
                 ],
-                'order'=>$rawData['Restaurant']['food'],
+                'order'=>[
+                    'food'=>$rawData['Restaurant']['food'],
+                    'total_price'=>$rawData['Restaurant']['total_price']
+                ],
                 'restaurant'=>[
                     'name'=>$restaurant->name,
                     'phone'=>$restaurant->phone,
                     'account'=>$restaurant->account,
                 ]
             ];
-            DB::transaction(function()use($id,$data){
+            // DB::transaction(function()use($id,$data){
                 Order::create(['data'=>$data ,'restaurant_id'=>$id]);
-            });
+            // });
             $this->output= [
                 'user'=>auth()->id(),
                 'massage'=>'successfully'
