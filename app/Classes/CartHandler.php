@@ -16,20 +16,41 @@ use function PHPUnit\Framework\never;
 
 class CartHandler{
     public readonly \Illuminate\Database\Eloquent\Relations\HasMany $cart;
-    public   $output=[];
+    protected   $output=[];
+    protected $massage='';
+    protected bool $success;
+    protected string $keyOutput='data';
     function __construct()
     {
         $this->cart=auth()->user()->cart();
     }
-    public function isCartsEmpty()
+    protected function setOutput(array|object $value,string $key='data')
+    {
+        $this->output=$value;
+        $this->keyOutput=$key;
+    }
+
+    public function output()
+    {
+        $array=['user'=>auth()->id()];
+        $array['status']=($this->success)?'success':'fail';
+        if(!empty(trim($this->massage))){
+            $array['massage']=$this->massage;
+        }
+        if(!empty($this->output)){
+            $array[$this->keyOutput]=$this->output;
+        }
+        return $array;
+    }
+    protected function isCartsEmpty()
     {
         return count($this->cart->get())==0;
     }
-    public function isCartExist($id)
+    protected function isCartExist($id)
     {
         return (count($this->thisCart($id))!=0);
     }
-    public function isThisFoodExist($id)
+    protected function isThisFoodExist($id)
     {
         return count($this->cart->with('food')->where('food_id', $id)->get())!=0;
     }
@@ -38,20 +59,14 @@ class CartHandler{
         $cart=$this->cart->get();
         if($this->isCartsEmpty())
         {
-            $this->output= [
-                'user'=>auth()->id(),
-                'massage'=>'your carts is empty'
-            ];
-            return false;
+            $this->massage= 'your carts is empty';
+            return $this->success =false;
         }
-        $this->output= [
-            'user'=>auth()->id(),
-            // ToDO: How sort and group
-            'cart'=>$cart->groupBy('cart_id')->sortBy('cart_id')
-        ];
-        return true;
+        $this->setOutput($cart->groupBy('cart_id')->sortBy('cart_id'),'cart');
+
+        return $this->success= true;
     }
-    public function update(int $id,int $quantity,bool $plus=false)
+    protected function update(int $id,int $quantity,bool $plus=false)
     {
         if($plus)
         return $this->thisFood($id)->update([
@@ -60,7 +75,7 @@ class CartHandler{
 
         return $this->thisFood($id)->update(['quantity'=>$quantity]);
     }
-    public function create(int $id,int $quantity,$cart_id=1)
+    protected function create(int $id,int $quantity,$cart_id=1)
     {
       return  $this->cart->create([
             'food_id'=>$id,
@@ -68,11 +83,11 @@ class CartHandler{
             'cart_id'=>$cart_id
         ]);
     }
-    public function thisFood($id)
+    protected function thisFood($id)
     {
         return $this->cart->with('food')->where('food_id', $id)->first();;
     }
-    public function thisCart($id)
+    protected function thisCart($id)
     {
         return $this->cart->where('cart_id',$id)->get();
     }
@@ -81,17 +96,14 @@ class CartHandler{
     {
         if($this->isCartsEmpty() or !$this->isThisFoodExist($data['food_id'])){
             $this->create($data['food_id'],$data['quantity']);
-        }else{
-            $this->output=[
-                'user_id'=>auth()->id(),
-                'massage'=>'you have such food',
-            ];
-            // $this->update($data['food_id'],$data['quantity'],true);
+        }else
+        {
+            $this->massage='you do not have  such food';
+            return $this->success= false;
+
         }
-        $this->output=[
-            'user_id'=>auth()->id(),
-            'massage'=>'the food add',
-        ];
+        $this->massage='the food add';
+        return $this->success= true;
     }
     public function addItemCard(int $id)
     {
@@ -100,70 +112,51 @@ class CartHandler{
         }else{
             $this->update($id,1,true);
         }
-        $this->output=[
-            'user_id'=>auth()->id(),
-            'massage'=>'the food add',
-            // 'Cart'=>$this->thisFood($id)
-        ];
+        $this->massage='the food add';
     }
     public function subItemCart(int $id) : bool
     {
         // $item=$this->thisFood($id);
         if($this->isCartsEmpty()){
-            $this->output=[
-                'user_id'=>auth()->id(),
-                'massage'=>'your cart is empty'
-            ];
-            return false;
+
+            $this->massage='your cart is empty';
+            return $this->success= false;
+
         }elseif(!$this->isThisFoodExist($id)){
-            $this->output=[
-                'user_id'=>auth()->id(),
-                'massage'=>'you Do not have such food'
-            ];
-            return false;
-        }elseif($this->thisFood($id)->quantity==1){
+            $this->massage='you Do not have such food';
+            return $this->success= false;
+
+        }elseif($this->thisFood($id)->quantity==1)
+        {
             $this->thisFood($id)->delete();
-            $this->output=[
-                'user_id'=>auth()->id(),
-                'massage'=>'your food is delete'
-            ];
-            return false;
-        }else{
-          $cart=  $this->update($id,-1,true);
-          $this->output=[
-            'user_id'=>auth()->id(),
-            'massage'=>'the food reduces',
-            // 'Cart'=>$this->thisFood($id)
-        ];
-            return true;
+            $this->massage='your food is delete';
+        }else
+        {
+            $this->update($id,-1,true);
+            $this->massage='the food reduces';
         }
+        return $this->success= true;
     }
     public function deleteItemCart($id)
     {
         if(!$this->thisFood($id))
         {
-            $this->output=[
-                'user_id'=>auth()->id(),
-                'massage'=>'you do not have such food',
-            ];
+            $this->massage='you do not have such food';
+            return $this->success= false;
+
         }else
         {
             $this->thisFood($id)->delete();
-            $this->output=[
-                'user_id'=>auth()->id(),
-                'massage'=>'food is deleted',
-                // 'Cart'=>$this->thisFood($id)
-            ];
+            $this->massage='food is deleted';
+            return $this->success= true;
+
         }
     }
     public function deleteCart($id)
     {
-
         $this->cart->where('cart_id',$id)->delete();
-        $this->output= [
-            'user'=>auth()->id(),
-            'massage'=>'your cart is empty'
-        ];
+        $this->massage='your cart is empty';
+        return $this->success= true;
     }
 
     protected function CartInfo()
@@ -196,7 +189,7 @@ class CartHandler{
             // 'carts'=>fn($query0)=>$query0->where([['cart_id',$id],['user_id',auth()->id()]]),
             'address',
             'food'=>fn($query)=>$query->with([
-                'cart'=>fn($query0)=>$query0->where([['cart_id',$id],['user_id',auth()->id()]]),
+                'carts as cart'=>fn($query0)=>$query0->where([['cart_id',$id],['user_id',auth()->id()]]),
             ])->whereIn('id',$cartIds)
         ])->find($id);
     }
@@ -204,60 +197,35 @@ class CartHandler{
     {
         if($this->isCartsEmpty())
         {
-            $this->output= [
-                'user'=>auth()->id(),
-                'massage'=>'your cart is empty'
-            ];
-            return false;
+            $this->massage='your cart is empty';
+            return $this->success= true;
         }
-
-
-        $this->output= [
-            'user'=>auth()->id(),
-            'Restaurant'=>CartInfoResource::collection($this->CartInfo())
-        ];
-        // $this->output=CartInfoResource::collection($this->CartInfo());
-
-        return true;
+        $this->setOutput(CartInfoResource::collection($this->CartInfo()),'Restaurant');
+        return $this->success= true;
     }
     public function getCartId($id)
     {
         if($this->isCartExist($id))
         {
-            $this->output= [
-                'user'=>auth()->id(),
-                'Restaurant'=>new CartInfoResource($this->CardIdInfo($id))
-            ];
-             return true;
+            $this->setOutput(new CartInfoResource($this->CardIdInfo($id)),'Restaurant');
+            return $this->success= true;
         }else
         {
-            $this->output= [
-                'user'=>auth()->id(),
-                'massage'=>'your cart is empty'
-            ];
-            return false;
-
+            $this->massage='your cart is empty';
+            return $this->success= false;
         }
-
-
-        // $this->output=new CartInfoResource($this->CardIdInfo($id));
     }
     protected function hasAddress():bool
     {
         $address=auth()->user()->addresses();
         if($address->get()->isEmpty()){
-            $this->output= [
-                'user'=>auth()->id(),
-                'massage'=>'please first add address'
-            ];
+            $this->massage='please first add address';
             return false;
         }
         if($address->where('default',1)->get()->isEmpty()){
-            $this->output= [
-                'user'=>auth()->id(),
-                'massage'=>'please first chose a default address'
-            ];
+            $this->massage='please first chose a default address';
             return false;
+
         }
         return true;
     }
@@ -269,7 +237,7 @@ class CartHandler{
 
             $rawData=json_decode(json_encode($this->output),true);
             if(!$this->hasAddress()){
-                return false;
+                return $this->success= false;
             }
 
             $user=auth()->user();
@@ -296,13 +264,13 @@ class CartHandler{
                 'user'=>auth()->id(),
                 'massage'=>'successfully'
             ];
-            return true;
+            return $this->success= true;
         }
         $this->output= [
             'user'=>auth()->id(),
             'massage'=>'fail try again'
         ];
 
-        return false;
+        return $this->success= false;
     }
 }

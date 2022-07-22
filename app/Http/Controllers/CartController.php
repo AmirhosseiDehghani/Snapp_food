@@ -16,7 +16,7 @@ class CartController extends Controller
     {
         $Cart=new CartHandler;
         $Cart->getCart();
-        return $Cart->output;
+        return $Cart->output();
     }
 
     public function setCart(CartRequest $request)
@@ -24,54 +24,53 @@ class CartController extends Controller
         // dd($request->validated());
         $Cart=new CartHandler;
         $Cart->setCart($request->validated());
-        return $Cart->output;
+        return $Cart->output();
 
         // return new CartResource($Cart->setCart($request->validated()));
     }
 
     public function addItemCart(Request $request,$id)
     {
-
         $Cart=new CartHandler;
         $Cart->addItemCard($id);
-        return $Cart->output;
+        return $Cart->output();
     }
     public function subItemCart($id)
     {
         $Cart=new CartHandler;
         $Cart->subItemCart($id);
-        return $Cart->output;
+        return $Cart->output();
     }
     public function deleteItemCart($id)
     {
         $Cart=new CartHandler;
         $Cart->deleteItemCart($id);
-        return $Cart->output;
+        return $Cart->output();
 
     }
     public function deleteCart($id)
     {
         $Cart=new CartHandler;
         $Cart->deleteCart($id);
-        return $Cart->output;
+        return $Cart->output();
     }
     public function getCartInfo()
     {
         $Cart=new CartHandler;
         $Cart->getCartInfo();
-        return $Cart->output;
+        return $Cart->output();
     }
     public function getCartId($id)
     {
         $Cart= new CartHandler;
         $Cart->getCartId($id);
-        return$Cart->output;
+        return$Cart->output();
     }
     public function payForCart($id)
     {
         $Cart=new CartHandler;
         $Cart->payForCart($id);
-        return $Cart->output;
+        return $Cart->output();
 
     }
 
