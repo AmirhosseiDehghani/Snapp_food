@@ -16,8 +16,6 @@ class RestaurantsController extends Controller
 {
     public function __construct()
     {
-       // TODO: باگ نمیتونم وارد صفحه نمایش بشم توسط پالسی
-
         $this->authorizeResource(Restaurant::class , 'Restaurant');
     }
     /**
@@ -29,11 +27,7 @@ class RestaurantsController extends Controller
     {
 
         $user=auth()->user();
-        // $Restaurants= Restaurant::query()->whereMorphRelation((new Restaurant)-> users(),User::class,'user_id')->get();
         $Restaurants=$user->restaurants()->paginate(10);
-        // $address=$user->restaurants()->address;
-
-        // dd($Restaurants);
         return  view('Restaurant.restaurantIndex',compact('Restaurants'));
     }
 
@@ -44,7 +38,6 @@ class RestaurantsController extends Controller
      */
     public function create()
     {
-        // dd(User::find(auth()->id())->hasRole('Seller'));
         User::find(auth()->id())->hasRole('Seller');
         $Week=[
             'Saturday',
@@ -68,8 +61,6 @@ class RestaurantsController extends Controller
     {
        $image_path= Storage::put('images', $request->validated()['image']);
 
-
-        // dd($request->all(),$test);
         $user=User::find(auth()->id());
         $Category=Category::find($request->validated()['category']);
 
@@ -80,6 +71,7 @@ class RestaurantsController extends Controller
 
         $Restaurant->categories()->save($Category);
         $Restaurant->users()->save($user);
+
 
         return to_route('Seller.Restaurant.index');
     }
@@ -95,7 +87,9 @@ class RestaurantsController extends Controller
 
         $Categories=Category::whereFood()->get();
         $Food=$Restaurant->food;
-        return view('Restaurant.restaurantShow',compact('Restaurant','Food','Categories'));
+        $Orders=$Restaurant->orders;
+
+        return view('Restaurant.restaurantShow',compact('Restaurant','Food','Categories','Orders'));
     }
 
     /**
@@ -106,15 +100,15 @@ class RestaurantsController extends Controller
      */
     public function edit(Restaurant $Restaurant)
     {
-       
+
         $Address=$Restaurant->address;
         $Week=['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday',];
         $Times=$Restaurant->Dates;
 
-        // dd($Restaurant,$Address);
+
         return view('Restaurant.restaurantEdit',compact('Restaurant','Address','Week','Times'));
 
-        // Restaurant::all()->isEmpty()
+
     }
 
     /**

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Buyer\BuyerAddressController;
 use App\Http\Controllers\Api\Buyer\BuyerController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\Comment\CommentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,8 +33,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('/addresses',BuyerAddressController::class);
     Route::post('/addresses/{id}',[BuyerAddressController::class,'setAddress'])->whereNumber('id');
 
-    Route::patch('/Buyer',[BuyerController::class,'update']);
     //-----------------cart
+    Route::patch('/Buyer',[BuyerController::class,'update']);
     Route::prefix('Buyer')->group(function(){
         Route::get('/cart',[CartController::class,'getCart']);
         Route::get('/cart/info',[CartController::class,'getCartInfo']);
@@ -44,10 +45,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::patch('/cart/sub-food/{id}',[CartController::class,'subItemCart'])->whereNumber('id');
         Route::delete('/cart/delete-food/{id}',[CartController::class,'deleteItemCart'])->whereNumber('id');
         Route::post('/cart/pay/{id}',[CartController::class,'payForCart'])->whereNumber('id');
+
     });
 
-
-
+    //-----------------Comment
+    Route::apiResource('comments',CommentController::class)->only(['index','store']);
 });
 
 

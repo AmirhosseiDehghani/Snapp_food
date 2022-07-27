@@ -23,6 +23,8 @@ return new class extends Migration
             $table->foreignIdFor(Discounts::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(Restaurant::class)->constrained();
             $table->string('make_of')->nullable();
+            $table->float('score',3,2)->default(0.00);
+            $table->integer('count')->default(0);
             $table->timestamps();
         });
     }

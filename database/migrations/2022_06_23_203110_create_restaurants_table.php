@@ -23,8 +23,10 @@ return new class extends Migration
             $table->string('phone');
             $table->boolean('is_Active')->default(true);
             $table->string('account');
-            // $table->boolean('have_images')->default(false);
-            // $table->foreignIdFor(User::class)->constrained();
+            $table->float('score',3,2)->default(0.00);
+            $table->integer('count')->default(0);
+
+          
             $table->timestamps();
         });
     }
