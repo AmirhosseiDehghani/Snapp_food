@@ -189,7 +189,7 @@ class CartHandler{
             // 'carts'=>fn($query0)=>$query0->where([['cart_id',$id],['user_id',auth()->id()]]),
             'address',
             'food'=>fn($query)=>$query->with([
-                'carts as cart'=>fn($query0)=>$query0->where([['cart_id',$id],['user_id',auth()->id()]]),
+                'cart'=>fn($query0)=>$query0->where([['cart_id',$id],['user_id',auth()->id()]]),
             ])->whereIn('id',$cartIds)
         ])->find($id);
     }
@@ -236,6 +236,8 @@ class CartHandler{
         if($test){
 
             $rawData=json_decode(json_encode($this->output),true);
+
+
             if(!$this->hasAddress()){
                 return $this->success= false;
             }
@@ -248,8 +250,8 @@ class CartHandler{
                     'address'=>new AddressResource($user->addresses()->where('default',1)->first())
                 ],
                 'order'=>[
-                    'food'=>$rawData['Restaurant']['food'],
-                    'total_price'=>$rawData['Restaurant']['total_price']
+                    'food'=>$rawData['food'],
+                    'total_price'=>$rawData['total_price']
                 ],
                 'restaurant'=>[
                     'name'=>$restaurant->name,
@@ -273,4 +275,6 @@ class CartHandler{
 
         return $this->success= false;
     }
+        
+
 }
