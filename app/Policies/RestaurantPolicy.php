@@ -19,7 +19,7 @@ class RestaurantPolicy
     public function viewAny(User $user)
     {
         // dd('viewAny');
-       
+
         return $user->can('seller dashboard');
     }
 
@@ -33,12 +33,6 @@ class RestaurantPolicy
     public function view(User $user, Restaurant $Restaurant)
     {
 
-        // dd('view');
-        // if($user->hasRole('Admin')){
-        //     return true;
-        // }
-        // dd('hekko');
-        // return true;
 
         if(! $user->can('seller dashboard')){
             return false;
@@ -62,8 +56,8 @@ class RestaurantPolicy
      */
     public function create(User $user)
     {
-        
-        
+
+
       return  $user->can('add restaurant');
     }
 
@@ -85,7 +79,7 @@ class RestaurantPolicy
         if(! $user->can('add restaurant')){
             return false;
         }
-        
+
        $UserOfRestaurants= $user->restaurants;
 
        foreach($UserOfRestaurants as $UserOfRestaurant)
@@ -95,7 +89,7 @@ class RestaurantPolicy
             }
        }
         return false;
-       
+
     }
 
     /**
@@ -114,19 +108,19 @@ class RestaurantPolicy
         if(! $user->can('delete restaurant')){
             return false;
         }
-        
+
        $UserOfRestaurants= $user->restaurants;
 
        foreach($UserOfRestaurants as $UserOfRestaurant)
-        { 
+        {
             if($UserOfRestaurant->id==$Restaurant->id){
                 return true;
             }
         }
         return false;
     }
-    
-    
+
+
 
     /**
      * Determine whether the user can restore the model.

@@ -86,8 +86,8 @@ class RestaurantsController extends Controller
     {
 
         $Categories=Category::whereFood()->get();
-        $Food=$Restaurant->food;
-        $Orders=$Restaurant->orders;
+        $Food=$Restaurant->food()->paginate(10);
+        $Orders=$Restaurant->orders()->status()->get();
 
         return view('Restaurant.restaurantShow',compact('Restaurant','Food','Categories','Orders'));
     }

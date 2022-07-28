@@ -140,17 +140,16 @@
                                             @method('delete')
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
-                                        <form action="{{route('Seller.Restaurant.food.edit',['Restaurant'=>$Restaurant->id,'Food'=>$item->id])}}" method="GET">
-                                            @csrf
-                                            <button class="btn btn-info" type="submit">Edit</button>
-                                        </form>
-
+                                        <a class="btn btn-info" href="{{route('Seller.Restaurant.food.edit',['Restaurant'=>$Restaurant->id,'Food'=>$item->id])}}" >
+                                            Edit
+                                        </a>
                                       </div>
                                   </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                           </table>
+                          {{$Food->links()}}
 
                     </div>
                 </div>

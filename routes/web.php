@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminCategoryFood;
 use App\Http\Controllers\Admin\AdminCategoryRestaurant;
+use App\Http\Controllers\Admin\AdminCommentController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminDiscount;
 use App\Http\Controllers\CommentController;
@@ -79,6 +80,7 @@ Route::middleware('auth')->group(function (){
         Route::resource('Category/Food',AdminCategoryFood::class)->only(['index','show','store']);
 
         Route::resource('/Discount',AdminDiscount::class)->except(['edit','create']);
+        Route::resource('/delete-request-comment',AdminCommentController::class )->only(['index','update','destroy']);
 
     });
     //Seller
