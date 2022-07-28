@@ -5,6 +5,7 @@ use App\Http\Resources\AddressResource;
 use App\Http\Resources\CartInfoCollection;
 use App\Http\Resources\CartInfoResource;
 use App\Http\Resources\CartResource;
+use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Restaurant;
@@ -33,7 +34,7 @@ class CartHandler{
     public function output()
     {
         $array=['user'=>auth()->id()];
-        $array['status']=($this->success)?'success':'fail';
+        $array['status']=($this->success??false)?'success':'fail';
         if(!empty(trim($this->massage))){
             $array['massage']=$this->massage;
         }
@@ -162,10 +163,10 @@ class CartHandler{
     protected function CartInfo()
     {
         $cartIds=$this->cart->pluck("food_id");
-
         return Restaurant::with(
             [
-                'address',
+                'address'
+                ,
                 'food'=>fn($query0)=>$query0->with
                 (
                     [
@@ -179,14 +180,16 @@ class CartHandler{
             {
                 $query->whereIn('id',$cartIds);
             }
-        )->get();
+        )
+        ->get();
+
     }
+
     protected function CardIdInfo($id)
     {
         $cartIds=$this->cart->where('cart_id',$id)->pluck("food_id");
 
         return Restaurant::with([
-            // 'carts'=>fn($query0)=>$query0->where([['cart_id',$id],['user_id',auth()->id()]]),
             'address',
             'food'=>fn($query)=>$query->with([
                 'cart'=>fn($query0)=>$query0->where([['cart_id',$id],['user_id',auth()->id()]]),
@@ -215,7 +218,7 @@ class CartHandler{
             return $this->success= false;
         }
     }
-    protected function hasAddress():bool
+    public function hasAddress():bool
     {
         $address=auth()->user()->addresses();
         if($address->get()->isEmpty()){
@@ -275,6 +278,6 @@ class CartHandler{
 
         return $this->success= false;
     }
-        
+
 
 }

@@ -19,8 +19,8 @@ class AddressFactory extends Factory
     {
         return [
             'address'=>$this->faker->address,
-            'lat'=>Str::random(),
-            'long'=>Str::random(),
+            'lat'=>"35.".mt_rand (1000000000,9999999999),
+            'long'=>"51.".mt_rand (1000000000,9999999999),
         ];
     }
 }

@@ -1,9 +1,11 @@
 <?php
 
+use App\Classes\CartHandler;
 use App\Http\Controllers\Api\ApiRestaurantController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Buyer\BuyerAddressController;
 use App\Http\Controllers\Api\Buyer\BuyerController;
+use App\Http\Controllers\Api\Buyer\DistanceController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Api\Comment\CommentController;
 use Illuminate\Http\Request;
@@ -28,10 +30,15 @@ Route::get('restaurants/{id}',[ApiRestaurantController::class,'show'])->whereNum
 Route::get('restaurants/{id}/food',[ApiRestaurantController::class,'restaurantFood'])->whereNumber('id');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+
+
+
+
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::apiResource('/addresses',BuyerAddressController::class);
     Route::post('/addresses/{id}',[BuyerAddressController::class,'setAddress'])->whereNumber('id');
+    Route::get('/near_restaurant', DistanceController::class );
 
     //-----------------cart
     Route::patch('/Buyer',[BuyerController::class,'update']);
@@ -58,8 +65,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 // });
 
 
+  // Route::get('/test',function(){
+    //     $cart=new CartHandler;
+    //     return $cart->CartInfo();
 
 
-Route::get('/test',function(){
+    // });
 
-});
+
+
+
+

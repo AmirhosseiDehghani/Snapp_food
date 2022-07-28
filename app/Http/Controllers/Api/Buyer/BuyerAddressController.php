@@ -19,7 +19,7 @@ class BuyerAddressController extends Controller
     {
         return User::query()->find(auth()->id())->addresses;
         // return auth()->user()->addresses;
-       
+
     }
 
     /**
@@ -59,22 +59,18 @@ class BuyerAddressController extends Controller
     }
     // public function setAddress(Address $address,User $user ,$id)
     public function setAddress(Address $address,User $user ,$id)
-    {   
+    {
 
-        // dd($address);
-        $this->authorize('update',$address);
-        // dd(Gate::authorize('update',$id)); //402
-        // dd(Gate::allows('update',$id));
-        // if(Gate::allows('update',$address)){
+        // $this->authorize('update',$address);
 
-            
+
             $user->query()->find(auth()->id())->addresses() ->where('default',1)->update(['default'=>0]);
-            
+
             $a=$user->query()->find(auth()->id())->addresses()->find($id)->update(['default'=>1]);
-            
+
             //  (new $user)->find($id)->update(['default'=>1]);
             // return response()->json(auth()->id());
-            return response()->json($a);
+            return ['massage'=>response()->json($a)];
         // }
         // return ['you not allow'];
 
