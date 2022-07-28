@@ -1,9 +1,9 @@
 <div>
     <div class="container-fluid">
-        <div class="bg-warning">
+        <div class="">
             <div class="d-flex justify-content-evenly align-items-center">
                 <div class="p-1">
-                    <a class="btn btn-secondary" href="{{$href}}">back Dashboard Restaurant</a> 
+                    <a class="btn btn-secondary" href="{{$href}}">back Dashboard Restaurant</a>
                 </div>
                 <div class="text-center">
                     <p class="h2">

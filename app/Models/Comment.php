@@ -27,4 +27,16 @@ class Comment extends Model
     {
         return $this->morphTo();
     }
+    public function answer()
+    {
+        return $this->hasOne(Comment::class, 'parent_id');
+    }
+    public function replies()
+    {
+        return $this->belongsTo(Comment::class, 'parent_id');
+    }
+    public function comments()
+    {
+        return $this->morphOne(Comment::class, 'commentable');
+    }
 }

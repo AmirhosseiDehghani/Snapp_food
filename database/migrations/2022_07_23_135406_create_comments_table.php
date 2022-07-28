@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->text('body');
-            $table->boolean('request_for_delete')->default('false');
+            $table->boolean('request_for_delete')->default(false);
+            $table->boolean("read")->default(false);
             $table->morphs('commentable');
             $table->timestamps();
         });

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminCategoryFood;
 use App\Http\Controllers\Admin\AdminCategoryRestaurant;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminDiscount;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FoodChangeFoodPartyController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\FoodImageController;
@@ -140,9 +141,25 @@ Route::middleware('auth')->group(function (){
                 Route::delete('/Restaurant/{Restaurant}/food/{Food}/image/{Images}',[FoodImageController::class,'destroy'])
                     ->whereNumber('Restaurant','Food','Images')->name('image.destroy')
                 ;
+
             });
             //Order
             Route::resource('Restaurant/{Restaurant}/order', OrderController::class)->only(['show','update']);
+            Route::get('Restaurant/{Restaurant}/order-history',[OrderController::class,'history'])->whereNumber('Restaurant',)->name('order.history');
+            //comment
+            Route::get('/Restaurant/{Restaurant}/comment',[CommentController::class,'index'])
+                ->whereNumber('Restaurant',)->name('comment.index')
+            ;
+            Route::put('/Restaurant/{Restaurant}/comment/{comment}',[CommentController::class,'update'])
+                ->whereNumber('Restaurant',)->name('comment.update')
+            ;
+            Route::delete('/Restaurant/{Restaurant}/comment/{comment}',[CommentController::class,'destroy'])
+                ->whereNumber('Restaurant',)->name('comment.delete')
+            ;
+            Route::post('/Restaurant/{Restaurant}/comment/{comment}',[CommentController::class,'store'])
+                ->whereNumber('Restaurant',)->name('comment.replay')
+            ;
+
 
 
         });

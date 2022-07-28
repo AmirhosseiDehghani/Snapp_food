@@ -93,11 +93,11 @@ class CommentHandler{
     {
         $this->addCommentRestaurant($array['cart_id'],$array['message']);
         $this->addRestaurantScore($array['cart_id'],$array['score']);
-       $food=$this->user->cart()->where('cart_id','=',$array['cart_id'])->get();
-       foreach ($food as  $value) {
-            $this->addCommentFood($value['food_id'],$array['message']);
-            $this->addFoodScore($value['food_id'],$array['score']);
-       }
+    //    $food=$this->user->cart()->where('cart_id','=',$array['cart_id'])->get();
+    //    foreach ($food as  $value) {
+    //         $this->addCommentFood($value['food_id'],$array['message']);
+    //         $this->addFoodScore($value['food_id'],$array['score']);
+    //    }
        return ['massage'=>'success'] ;
 
     }

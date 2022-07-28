@@ -5,7 +5,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Buyer\BuyerAddressController;
 use App\Http\Controllers\Api\Buyer\BuyerController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\Comment\Api\CommentController;
+use App\Http\Controllers\Api\Comment\CommentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

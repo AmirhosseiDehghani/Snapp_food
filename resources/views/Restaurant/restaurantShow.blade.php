@@ -1,20 +1,24 @@
 @extends('layouts.seller')
 @section('content')
 
-{{-- @dd($Restaurant->id) --}}
+
 <div class="row">
     <div class="col-12">
-        <x-navbar-show-restaurant-component>
-            <x-slot:href>
-               {{route('Seller.Restaurant.show',['Restaurant'=>$Restaurant->id])}}
-            </x-slot>
-           Restaurant:{{$Restaurant->name}}
-        </x-navbar-show-restaurant-component>
+        <div class="d-flex d-flex justify-content-between">
+            <x-navbar-show-restaurant-component>
+                <x-slot:href>
+                   {{route('Seller.Restaurant.show',['Restaurant'=>$Restaurant->id])}}
+                </x-slot>
+               Restaurant:{{$Restaurant->name}}
+            </x-navbar-show-restaurant-component>
+
+            <div><a class="btn btn-info" href="{{ route('Seller.Restaurant.order.history', ['Restaurant'=>$Restaurant->id]) }}">History</a></div>
+            <div><a class="btn btn-info" href="{{ route('Seller.Restaurant.comment.index', ['Restaurant'=>$Restaurant->id]) }}">Comment</a></div>
+        </div>
     </div>
 
     <div class="col-12">
         <div class="row">
-            food add show change
             <div class="col">
                 <div class="row">
                     <div class="col-12">
