@@ -77,8 +77,12 @@ class OrderController extends Controller
              ->where('status', '=', '3')
            ->paginate(10);
         }
-        
+        $Sum=0;
+        foreach ($Orders as   $order) {
+            $Sum+=$order['data']['order']['total_price'];
+        }
+        // return$Orders;
 
-        return view('Restaurant.Order.orderHistory',compact('Orders','Restaurant'));
+        return view('Restaurant.Order.orderHistory',compact('Orders','Restaurant','Sum'));
     }
 }
