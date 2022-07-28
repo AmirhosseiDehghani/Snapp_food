@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('body');
             $table->boolean('request_for_delete')->default(false);
             $table->boolean("read")->default(false);
-            $table->morphs('commentable');
+            // $table->morphs('commentable');
             $table->timestamps();
         });
     }

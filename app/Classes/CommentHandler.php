@@ -44,19 +44,29 @@ class CommentHandler{
         return (new RestaurantScore)->setIdRestaurant($id)->Score($score);
     }
     ///------------addComment
-    protected function addCommentFood(int $idFood, string $comment)
+    protected function addCommentFood(int $idFood, string|Comment $comment)
     {
-        $Comment=new Comment();
-        $Comment->body=$comment;
-        $Comment->user_id=$this->user->id;
+        if( is_string($comment) ){
+            $Comment=new Comment();
+            $Comment->body=$comment;
+            $Comment->user_id=$this->user->id;
+        }else{
+            $Comment=$comment;
+        }
         $this->FindFood($idFood)->comments()->save($Comment);
+        return $Comment;
     }
-    protected function addCommentRestaurant(int $idFood, string $comment)
+    protected function addCommentRestaurant(int $idFood, string|Comment $comment)
     {
-        $Comment=new Comment();
-        $Comment->body=$comment;
-        $Comment->user_id=$this->user->id;
+        if( is_string($comment) ){
+            $Comment=new Comment();
+            $Comment->body=$comment;
+            $Comment->user_id=$this->user->id;
+        }else{
+            $Comment=$comment;
+        }
         $this->FindRestaurant($idFood)->comments()->save($Comment);
+        return $Comment;
     }
     ///---------------------------------------
 
@@ -91,13 +101,13 @@ class CommentHandler{
     }
     public function postComment(array $array)
     {
-        $this->addCommentRestaurant($array['cart_id'],$array['message']);
+       $Comment= $this->addCommentRestaurant($array['cart_id'],$array['message']);
         $this->addRestaurantScore($array['cart_id'],$array['score']);
-    //    $food=$this->user->cart()->where('cart_id','=',$array['cart_id'])->get();
-    //    foreach ($food as  $value) {
-    //         $this->addCommentFood($value['food_id'],$array['message']);
-    //         $this->addFoodScore($value['food_id'],$array['score']);
-    //    }
+       $food=$this->user->cart()->where('cart_id','=',$array['cart_id'])->get();
+       foreach ($food as  $value) {
+            $this->FindFood($value['food_id'])->comments()->save($Comment);
+            $this->addFoodScore($value['food_id'],$array['score']);
+       }
        return ['massage'=>'success'] ;
 
     }

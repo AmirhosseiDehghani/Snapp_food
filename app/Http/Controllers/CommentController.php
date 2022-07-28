@@ -36,8 +36,10 @@ class CommentController extends Controller
             $reply->parent_id = $comment->id;
             $reply->read = true;
 
+
             $comment->read=true;
-            $comment->comments()->save($reply);
+            $comment->save();
+            $comment->answer()->save($reply);
         }
 
         return back();

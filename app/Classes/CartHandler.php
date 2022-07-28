@@ -81,7 +81,7 @@ class CartHandler{
       return  $this->cart->create([
             'food_id'=>$id,
             'quantity'=>$quantity,
-            'cart_id'=>$cart_id
+            // 'cart_id'=>$cart_id
         ]);
     }
     protected function thisFood($id)

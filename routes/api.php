@@ -31,7 +31,12 @@ Route::get('restaurants/{id}/food',[ApiRestaurantController::class,'restaurantFo
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
+    Route::get('/test',function(){
+        $cart=new CartHandler;
+        //  $cart->getCartId();
 
+
+    });
 
 
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -65,12 +70,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 // });
 
 
-  // Route::get('/test',function(){
-    //     $cart=new CartHandler;
-    //     return $cart->CartInfo();
 
-
-    // });
 
 
 

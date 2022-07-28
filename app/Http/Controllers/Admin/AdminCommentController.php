@@ -30,7 +30,7 @@ class AdminCommentController extends Controller
      */
     public function update($id)
     {
-        dd('h');
+       
         $comment=Comment::find($id);
         $comment->request_for_delete=false;
         $comment->save();

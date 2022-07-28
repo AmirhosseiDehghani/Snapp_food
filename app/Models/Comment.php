@@ -35,8 +35,17 @@ class Comment extends Model
     {
         return $this->belongsTo(Comment::class, 'parent_id');
     }
-    public function comments()
+    public function food()
     {
-        return $this->morphOne(Comment::class, 'commentable');
+        return $this->morphedByMany(Food::class, 'commentable');
     }
+    public function restaurant()
+    {
+        return $this->morphedByMany(Restaurant::class, 'commentable');
+    }
+    // public function comment()
+    // {
+    //     return  $this->morphToMany(Comment::class,'commentable');
+    // }
+
 }

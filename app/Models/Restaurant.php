@@ -67,7 +67,7 @@ class Restaurant extends Model
     }
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');
+        return $this->morphToMany(Comment::class, 'commentable')->whereNull('parent_id');
     }
 
 
