@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Comment;
+namespace App\Http\Controllers\Api\Comment;
 
 use App\Classes\CommentHandler;
 use App\Classes\Helper\RestaurantScore;
