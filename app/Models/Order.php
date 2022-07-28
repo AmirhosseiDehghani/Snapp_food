@@ -30,7 +30,7 @@ class Order extends Model
      */
     protected static function booted()
     {
-        static::addGlobalScope(new FinishOrder);
+        // static::addGlobalScope(new FinishOrder);
     }
     //----------Mutator
     protected function data(): Attribute
@@ -64,5 +64,11 @@ class Order extends Model
     {
         return $this->belongsTo(Restaurant::class);
     }
+
+    public function scopeStatus($query)
+    {
+        $query->where('status', '!=', '3');
+    }
+
 
 }

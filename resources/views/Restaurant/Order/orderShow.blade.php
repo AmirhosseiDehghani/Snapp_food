@@ -12,6 +12,7 @@
             </x-navbar-show-restaurant-component>
         </div>
     </div>
+    
 
     <div class="col-12">
         <div style="min-height: 80vh;" class="w-100 d-flex d-flex justify-content-center d-flex align-items-center ">
@@ -19,14 +20,17 @@
                 <div class="p-5">
                     <div class="row ">
                         <div class="col-12">
-                            <form action="{{ route('Seller.Restaurant.order.update', ['Restaurant'=>$Restaurant,"order"=>$order]) }}" method='post' >
-                                @csrf
-                                @method('put')
-                                <button type="submit" class="btn btn-info">
-                                    next level
-                                </button>
-                                <div><p>next is: {{$order->showNextStatus}}</p></div>
-                            </form>
+                            {{-- @dd($order->status) --}}
+                            @if ($order->status!=3)
+                                <form action="{{ route('Seller.Restaurant.order.update', ['Restaurant'=>$Restaurant,"order"=>$order]) }}" method='post' >
+                                    @csrf
+                                    @method('put')
+                                    <button type="submit" class="btn btn-info">
+                                        next level
+                                    </button>
+                                    <div><p>next is: {{$order->showNextStatus}}</p></div>
+                                </form>
+                            @endif
                         </div>
                         <div class="col-12">
                             <div class="card" style="width: 18rem;">

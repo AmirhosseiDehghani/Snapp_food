@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Restaurant;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -51,5 +52,33 @@ class OrderController extends Controller
        {
             abort(403,'you do not have permission to edit status');
        }
+    }
+
+    public function history(Request $request,Restaurant $Restaurant)
+    {
+
+        $filter=$request->get('filter')??1;
+        if($filter==1)
+        {
+            // dd(Carbon::now()->subWeek(1)->toDateTimeString());
+            $Orders= $Restaurant->orders()
+             ->where('status', '=', '3')
+             ->whereDate('created_at','>',Carbon::now()->subWeek(1)->toDateTimeString())
+            ->paginate(10);
+
+        }elseif($filter==2)
+        {
+            $Orders= $Restaurant->orders()
+             ->where('status', '=', '3')
+             ->whereDate('created_at','>',Carbon::now()->subMonth(1)->toDateTimeString())
+           ->paginate(10);
+        }else{
+            $Orders= $Restaurant->orders()
+             ->where('status', '=', '3')
+           ->paginate(10);
+        }
+        
+
+        return view('Restaurant.Order.orderHistory',compact('Orders','Restaurant'));
     }
 }
