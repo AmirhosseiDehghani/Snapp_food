@@ -8,4 +8,9 @@
 </p>
 
 ## About Laravel
+how install:
+1-git clone
+2-composer install 
+3-php artisan serve 
+4-php artisan migrate --seed --step
 
