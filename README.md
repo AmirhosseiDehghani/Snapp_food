@@ -9,9 +9,10 @@
 
 ## About Laravel
 how install:<br>
+
 1-git clone<br>
 2-composer install <br>
-3-php artisan key:generate<br>
+3-add env file and php artisan key:generate<br>
 4-php artisan serve <br>
 5-php artisan migrate --seed --step<br>
 
