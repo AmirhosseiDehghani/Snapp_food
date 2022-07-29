@@ -15,4 +15,9 @@ how install:<br>
 3-add env file and php artisan key:generate<br>
 4-php artisan serve <br>
 5-php artisan migrate --seed --step<br>
+<br>
+<br>
+<h3>api</h3>
+https://www.getpostman.com/collections/cfb71be9a0e6024abf82
+
 
