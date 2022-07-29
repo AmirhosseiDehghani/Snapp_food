@@ -14,7 +14,8 @@ how install:<br>
 2-composer install <br>
 3-add env file and php artisan key:generate<br>
 4-php artisan serve <br>
-5-php artisan migrate --seed --step<br>
+4-optional setting seeder in database\seeders\DatabaseSeeder.php
+6-php artisan migrate --seed --step<br>
 <br>
 <br>
 <h3>api</h3>
